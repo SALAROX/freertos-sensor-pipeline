@@ -1,0 +1,25 @@
+; C:\GIT_CHEVALIER\generic_latch_bootloader\PCL_PCAN_View__File.xmt
+;   CAN messages saved by PCAN-View v4.3.3.610
+;
+; Columns descriptions:
+; ~~~~~~~~~~~~~~~~~~~~~
+; +Message ID
+; |            +Cycle time in ms (0=manual)
+; |            |  +Data length
+; |            |  |  +Frame type
+; |            |  |  |  +Message data
+; |            |  |  |  |
+7E7h        2000  8  D 01h B9h 00h 00h 00h 00h 00h 00h  Paused ; Erase Memory
+7E7h          10  8  D 00h 00h 05h 00h 00h 00h 00h 00h  Paused
+7E7h        2000  8  D 01h BBh 00h 00h 00h 00h 00h 00h  Paused ; Bootloader Version
+7E7h        2000  8  D 06h B2h 00h 00h 00h 00h 00h 00h  Paused ; Read by ID - Func ID
+7E7h        2000  8  D 06h B2h 01h 00h 00h 00h 00h 00h  Paused ; Read by ID - Serial Num
+7E7h        2000  8  D 06h B2h 21h 42h 45h 00h 00h 00h  Paused ; Read by ID - Boot FLag
+7E7h        2000  8  D 06h B2h 22h 00h 00h 00h 00h 00h  Paused ; Read by ID - BL Ver
+7E7h        2000  8  D 06h B2h 24h 00h 00h 00h 00h 00h  Paused ; Read by ID - App Ver
+7E7h        2000  8  D 03h 2Eh 00h AAh 00h 00h 00h 00h  Paused ; Write By ID - Set BootFlag
+7E7h        2000  8  D 01h BDh 00h 00h 00h 00h 00h 00h  Paused ; Clear Boot Flag - From BL
+7E7h        2000  8  D 01h 01h 00h 00h 00h 00h 00h 00h  Paused ; Run App
+7E7h        1000  8  D 01h BAh 00h 00h 00h 00h 00h 00h  Paused ; Memory Status
+7E7h        2000  8  D 01h 11h 00h 00h 00h 00h 00h 00h  Paused ; ECU Reset - From BL
+7E7h          10  8  D 06h B2h 57h 00h 00h 00h 00h 00h  Paused

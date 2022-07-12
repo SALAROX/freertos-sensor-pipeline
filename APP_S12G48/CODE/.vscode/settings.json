@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "can_drv.h": "c",
+        "pe_types.h": "c"
+    }
+}
