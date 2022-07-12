@@ -7,7 +7,7 @@
 **     Version   : Component 01.016, Driver 02.06, CPU db: 3.00.020
 **     Datasheet : MC9S12GRMV1 Rev. 1.02 June 7, 2011
 **     Compiler  : CodeWarrior HC12 C Compiler
-**     Date/Time : 13/08/2021, 16:07
+**     Date/Time : 12/07/2022, 20:44
 **     Abstract  :
 **         This component "MC9S12G64_32" implements properties, methods,
 **         and events of the CPU.

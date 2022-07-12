@@ -6,7 +6,7 @@
 **     Component : Init_ADC
 **     Version   : Component 01.218, Driver 01.12, CPU db: 3.00.020
 **     Compiler  : CodeWarrior HC12 C Compiler
-**     Date/Time : 17/09/2021, 15:43
+**     Date/Time : 12/07/2022, 20:44
 **     Abstract  :
 **          This file implements the ADC (ADC) module initialization
 **          according to the Peripheral Initialization Component settings,
@@ -54,22 +54,10 @@
 **            Number of automatic comparison               : 0
 **          Pins/Signals                                   : 
 **            External trigger                             : no
-**            ADC input pins                               : 4
+**            ADC input pins                               : 1
 **              Input Pin0                                 : 
 **                Pin                                      : PAD0_KWAD0_AN0
-**                Pin Signal                               : HBR_HSD_ISENSB_ADC
-**                Digital Input                            : Disabled
-**              Input Pin1                                 : 
-**                Pin                                      : PAD1_KWAD1_AN1
-**                Pin Signal                               : HBR_HSD_ISENSA_ADC
-**                Digital Input                            : Disabled
-**              Input Pin2                                 : 
-**                Pin                                      : PAD2_KWAD2_AN2
-**                Pin Signal                               : SNS_VSENS_ADC
-**                Digital Input                            : Disabled
-**              Input Pin3                                 : 
-**                Pin                                      : PAD3_KWAD3_AN3
-**                Pin Signal                               : SNS_TSENS_ADC
+**                Pin Signal                               : SUPPLY_VOLTAGE
 **                Digital Input                            : Disabled
 **          Interrupts                                     : 
 **            Sequence Complete                            : 
@@ -114,12 +102,6 @@
 */
 void ADC_Port_AD_Init(void)
 {
-        
-        
-        
-        
-        
-        
         
         
   /* Initialization of the ADC module */

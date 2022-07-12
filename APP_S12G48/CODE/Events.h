@@ -29,10 +29,9 @@
 #include "GPIO_Port_AD.h"
 #include "ADC_Port_AD.h"
 #include "GPIO_Port_T.h"
-#include "GPIO_Port_P.h"
-#include "PWM_Port_P.h"
 #include "RTI1.h"
 #include "IEE1.h"
+#include "SM1.h"
 
 #pragma CODE_SEG DEFAULT
 

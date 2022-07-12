@@ -6,7 +6,7 @@
 **     Component : Init_GPIO
 **     Version   : Component 01.114, Driver 01.07, CPU db: 3.00.020
 **     Compiler  : CodeWarrior HC12 C Compiler
-**     Date/Time : 17/09/2021, 15:43
+**     Date/Time : 12/07/2022, 20:44
 **     Abstract  :
 **          This file implements the General Purpose Input Output (S)
 **          module initialization according to the Peripheral Initialization
@@ -21,43 +21,8 @@
 **             ----------------------------------------------------
 **                Number (on package)  |    Name
 **             ----------------------------------------------------
-**                       0             |  PS0_RXD0
-**                       1             |  PS1_TXD0
-**                       4             |  PS4_PWM4_MISO0
-**                       5             |  PS5_IOC4_MOSI0
-**                       6             |  PS6_IOC5_SCK0
 **                       7             |  PS7_API_EXTCLK_ECLK_PWM5_SS0
 **             ----------------------------------------------------
-**
-**          Pin0                                           : PS0_RXD0
-**            Direction                                    : Input
-**            Output value                                 : no initialization
-**            Pull resistor                                : pull down
-**            Open drain                                   : push-pull
-**
-**          Pin1                                           : PS1_TXD0
-**            Direction                                    : Input
-**            Output value                                 : no initialization
-**            Pull resistor                                : pull down
-**            Open drain                                   : push-pull
-**
-**          Pin4                                           : PS4_PWM4_MISO0
-**            Direction                                    : Input
-**            Output value                                 : no initialization
-**            Pull resistor                                : pull up
-**            Open drain                                   : push-pull
-**
-**          Pin5                                           : PS5_IOC4_MOSI0
-**            Direction                                    : Input
-**            Output value                                 : no initialization
-**            Pull resistor                                : pull up
-**            Open drain                                   : push-pull
-**
-**          Pin6                                           : PS6_IOC5_SCK0
-**            Direction                                    : Input
-**            Output value                                 : 0
-**            Pull resistor                                : no initialization
-**            Open drain                                   : push-pull
 **
 **          Pin7                                           : PS7_API_EXTCLK_ECLK_PWM5_SS0
 **            Direction                                    : Output

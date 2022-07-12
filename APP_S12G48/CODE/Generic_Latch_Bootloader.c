@@ -24,9 +24,9 @@
 #include "GPIO_Port_AD.h"
 #include "ADC_Port_AD.h"
 #include "GPIO_Port_T.h"
-#include "GPIO_Port_P.h"
-#include "PWM_Port_P.h"
 #include "RTI1.h"
+#include "IEE1.h"
+#include "SM1.h"
 /* Include shared modules, which are used for whole project */
 #include "PE_Types.h"
 #include "PE_Error.h"
@@ -120,6 +120,10 @@ void main(void)
   /*** End of Processor Expert internal initialization.                    ***/
 
   /* Write your code here */
+  // PTT_PTT3 ^= 1;
+  /*CAN TRCV Normal Mode*/
+  PTS_PTS7 = 0;
+
   CAN_drv_init();
 
   SYS_SelectScheduler((uint8_t)SYS_defaultSched);
@@ -129,9 +133,8 @@ void main(void)
   /* initialization of Bootloader Variables */
   failure_PDU_SID = 0;
   Diag_State = DIAG_IDLE;
-  IEE1_GetByte(CAN_FLAG_ADDRESS, &Boot_FLag);
-  while (IEE1_Busy())
-    ;
+  //IEE1_GetByte(CAN_FLAG_ADDRESS, &Boot_FLag);
+  //while (IEE1_Busy());
 
   Comm_Mode = COMM_CAN;
   blState = BL_SM_INIT;
@@ -141,44 +144,13 @@ void main(void)
 
   silentBusCounter = 0;
 
-  /* Load application info */
-  // while (PFlash_GetBlockFlash(BL_CFG_DATA_REPOSITORY_ADDRESS_START, (PFlash_TDataAddress)&BL_Repository, sizeof(BL_Repository_t)) != ERR_OK)
-  while (PFlash_GetBlockFlash(BL_CFG_DATA_REPOSITORY_ADDRESS_START, (PFlash_TDataAddress)&appEntryPoint, sizeof(appEntryPoint)) != ERR_OK)
-  {
-  }
-
-  appVector_check |= (uint32_t)appEntryPoint[0];
-  appVector_check <<= 8;
-  appVector_check |= (uint32_t)appEntryPoint[1];
-  appVector_check |= 0x030000;
-
-  BL_Repository.ApplicationInfo.entryPoint = (AppEntry_t)appVector_check;
-
-  if (BL_Repository.ApplicationInfo.entryPoint == (AppEntry_t)0x03FFFF)
-  {
-    Memory_Status = EMPTY;
-  }
-  else
-  {
-    Memory_Status = UNTOUCHED;
-  }
-
   /*** Processor Expert end of main routine. DON'T MODIFY THIS CODE!!! ***/
-  for (;;)
+  for(;;)
   {
     /* Runs as fast as possible */
     if (Comm_Mode == COMM_CAN)
     {
       UDS_Diagnostics_Handler();
-
-      if (BL_PROG_Enable)
-      {
-        BL_Prog_Handler();
-      }
-      else
-      {
-        /* Do Nothing */
-      }
     }
 
 #if 1
@@ -211,7 +183,7 @@ void main(void)
 #endif
 
     /*State Machine for Bootloader*/
-    STM_Bootloader();
+    // STM_Bootloader();
   }
   /*** Processor Expert end of main routine. DON'T WRITE CODE BELOW!!! ***/
 } /*** End of main routine. DO NOT MODIFY THIS TEXT!!! ***/
@@ -238,16 +210,6 @@ static void SYS_DefaultScheduler(void)
   switch (SYS_schedClock1ms % 10)
   {
   case 0:
-    if (!udsReqTimeOut_Flag)
-    {
-      silentBusCounter++;
-    }
-    else
-    {
-      /*Reset Counter */
-      silentBusCounter = 0;
-    }
-
     // PTT_PTT3 ^= 1;
     break;
 

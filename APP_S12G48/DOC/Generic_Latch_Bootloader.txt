@@ -34,16 +34,6 @@ Module "GPIO_Port_T" (component Init_GPIO_HCS12)
                 settings. Call this method in the user code to initialize the module. By default, the method is called by PE 
                 automatically; see "Call Init method" property of the component for more details.
 
-Module "GPIO_Port_P" (component Init_GPIO_HCS12)
-   - GPIO_Port_P_Init -This method initializes registers of the GPIO module according to this Peripheral Initialization 
-                settings. Call this method in the user code to initialize the module. By default, the method is called by PE 
-                automatically; see "Call Init method" property of the component for more details.
-
-Module "PWM_Port_P" (component Init_PWM_HCS12)
-   - PWM_Port_P_Init -This method initializes registers of the PWM module according to this Peripheral Initialization settings. 
-                Call this method in user code to initialize the module. By default, the method is called by PE automatically; 
-                see "Call Init method" property of the component for more details.
-
 Module "RTI1"      (component Init_RTI_HCS12)
    - RTI1_Init -This method initializes registers of the RTI module according to this Peripheral Initialization settings. Call 
                 this method in user code to initialize the module. By default, the method is called by PE automatically; see 
@@ -83,6 +73,41 @@ Module "IEE1"      (component IntEEPROM)
    - IEE1_EraseEeprom -The method mass erases all EEPROM memory. The method also sets address pointer for <SetActByte> and 
                 <GetActByte> methods (applicable only if these methods are enabled). The pointer is set to address passed as 
                 the parameter - 1.
+
+Module "SM1"       (component SynchroMaster)
+   - SM1_Enable -Enable the component - it starts send and receive functions. Events may be generated 
+                ("DisableEvent"/"EnableEvent"). This method cannot be disabled if the Fault mode is enabled. It's intended for 
+                re-enabling the module if fault occurred. For more information please see the <"Fault mode" >property .
+   - SM1_Disable -Disable the component - it stops the send and receive functions. No events will be generated. Note: When this 
+                method is called while a transmission is in progress, the data being transmitted/received may be lost.
+   - SM1_RecvChar -If any data is received, this method returns one character, otherwise it returns an error code (it does not 
+                wait for data).   For information about SW overrun behavior please see <General info page>. [ Version specific 
+                information for Freescale 56800 derivatives ]   DMA mode:  If DMA controller is available on selected CPU and 
+                receiver is configured to use DMA controller then this method only sets the selected DMA channel. Status of the 
+                DMA transfer can then be checked using method GetCharsInRxBuf. See typical usage for details about 
+                communication using DMA.
+   - SM1_SendChar -Sends one character to the channel. [ Version specific information for Freescale 56800 derivatives ]   DMA 
+                mode:  If DMA controller is available on the selected CPU and the transmitter is configured to use DMA 
+                controller then this method only sets the selected DMA channel. The status of the DMA transfer can then be 
+                checked using GetCharsInTxBuf method. See the typical usage for details about communication using DMA.
+   - SM1_CharsInRxBuf -Returns the number of characters in the input buffer.  Note: If the Interrupt service is disabled, and 
+                the Ignore empty character is set to yes, and a character has been received, then this method returns 1 
+                although it was an empty character.  (deprecated method - Use the GetCharsInRxBuf method instead!)  [ Version 
+                specific information for Freescale 56800 derivatives ]   DMA mode:  If DMA controller is available on the 
+                selected CPU and the receiver is configured to use DMA controller then this method returns the number of 
+                characters in the receive buffer.
+   - SM1_GetCharsInRxBuf -Returns the number of characters in the input buffer.  Note: If the Interrupt service is disabled, 
+                and the Ignore empty character is set to yes, and a character has been received, then this method returns 1 
+                although it was an empty character. [ Version specific information for Freescale 56800 derivatives ]   DMA mode:
+                If DMA controller is available on the selected CPU and the receiver is configured to use DMA controller then 
+                this method returns the number of characters in the receive buffer.
+   - SM1_CharsInTxBuf -Returns the number of characters in the output buffer.  (deprecated method - Use the GetCharsInRxBuf 
+                method instead!)  [ Version specific information for Freescale 56800 derivatives ]   DMA mode:  If DMA 
+                controller is available on the selected CPU and the transmitter is configured to use DMA controller then this 
+                method returns the number of characters in the transmit buffer.
+   - SM1_GetCharsInTxBuf -Returns the number of characters in the output buffer. [ Version specific information for Freescale 
+                56800 derivatives ]   DMA mode:  If DMA controller is available on the selected CPU and the transmitter is 
+                configured to use DMA controller then this method returns the number of characters in the transmit buffer.
 
 Module "Cpu"       (component MC9S12G64_32)
    - Cpu_EnableInt -Enable maskable interrupts

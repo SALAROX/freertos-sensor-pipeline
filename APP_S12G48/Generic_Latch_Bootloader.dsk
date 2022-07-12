@@ -2,7 +2,7 @@
 PE_DesktopFileVersion=1094
 
 [Desktop]
-StartupPrj=C:\GIT_CHEVALIER\generic_latch_bootloader\Generic_Latch_Bootloader.pe
+StartupPrj=C:\GIT_CHEVALIER_LOCAL\NFC_Reader_S12G\APP_S12G48\Generic_Latch_Bootloader.pe
 
 [PE_IDE_PlugIn]
 
@@ -11,7 +11,7 @@ StartupPrj=C:\GIT_CHEVALIER\generic_latch_bootloader\Generic_Latch_Bootloader.pe
 [AppPanel]
 Status=hiden
 WindowState=NORMAL
-Rect=[182|271|310|496]
+Rect=[234|323|310|496]
 
 [CpuPanel]
 Status=Visible
@@ -41,9 +41,9 @@ BF_BA_AllQuestions=Yes
 [ObjInspector]
 Status=Visible
 WindowState=NORMAL
-Rect=[-40|94|777|786]
+Rect=[3|94|1078|786]
 ObjInspectorDockedWithPrphInit=No
-ColWidth01=254
+ColWidth01=253
 ColWidth02=506
 ColWidth11=248
 ColWidth12=427
@@ -63,7 +63,7 @@ Rect=[741|90|781|786]
 ViewMode=PrphRegInit
 SortRegsByAddr=Yes
 GroupRegisters=No
-Peripheral=CPU
+Peripheral=MSCAN
 
 [Editor]
 Rect=[0|0|0|0]
@@ -91,7 +91,7 @@ FindScope=FROM_CURSOR
 FindHistory=0
 ReplaceHistory=0
 OpenFilesCount=0
-SelFile=C:\GIT_CHEVALIER\generic_latch_bootloader\CODE\RTI1.c
+SelFile=
 SelLine=-1
 FileHistory=0
 

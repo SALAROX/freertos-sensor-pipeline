@@ -7,7 +7,7 @@
 **     Version   : Component 01.016, Driver 02.06, CPU db: 3.00.020
 **     Datasheet : MC9S12GRMV1 Rev. 1.02 June 7, 2011
 **     Compiler  : CodeWarrior HC12 C Compiler
-**     Date/Time : 17/09/2021, 15:43
+**     Date/Time : 12/07/2022, 20:44
 **     Abstract  :
 **         This component "MC9S12G64_32" implements properties, methods,
 **         and events of the CPU.
@@ -33,10 +33,9 @@
 #include "GPIO_Port_AD.h"
 #include "ADC_Port_AD.h"
 #include "GPIO_Port_T.h"
-#include "GPIO_Port_P.h"
-#include "PWM_Port_P.h"
 #include "RTI1.h"
 #include "IEE1.h"
+#include "SM1.h"
 #include "Events.h"
 #include "Cpu.h"
 
@@ -226,14 +225,18 @@ void PE_low_level_init(void)
   /* Common initialization of the CPU registers */
   /* ACMPC: ACDIEN=1 */
   setReg8Bits(ACMPC, 0x10U);            
+  /* DDRS: DDRS6=1,DDRS5=1,DDRS4=0 */
+  clrSetReg8Bits(DDRS, 0x10U, 0x60U);   
+  /* PTS: PTS6=0 */
+  clrReg8Bits(PTS, 0x40U);              
   /* CPMUINT: LOCKIE=0,OSCIE=0 */
   clrReg8Bits(CPMUINT, 0x12U);          
   /* CPMULVCTL: LVIE=0 */
   clrReg8Bits(CPMULVCTL, 0x02U);        
   /* IRQCR: IRQEN=0 */
   clrReg8Bits(IRQCR, 0x40U);            
-  /* ATDDIEN: IEN7=1,IEN6=1,IEN5=1,IEN4=1,IEN3=0,IEN2=0,IEN1=0,IEN0=0 */
-  clrSetReg16Bits(ATDDIEN, 0x0FU, 0xF0U); 
+  /* ATDDIEN: IEN6=1,IEN2=1,IEN1=1,IEN0=0 */
+  clrSetReg16Bits(ATDDIEN, 0x01U, 0x46U); 
   /* ### MC9S12G64_32 "Cpu" init code ... */
   /* ### Init_MSCAN "CAN1" init code ... */
   CAN1_Init();
@@ -247,14 +250,12 @@ void PE_low_level_init(void)
   ADC_Port_AD_Init();
   /* ### Init_GPIO "GPIO_Port_T" init code ... */
   GPIO_Port_T_Init();
-  /* ### Init_GPIO "GPIO_Port_P" init code ... */
-  GPIO_Port_P_Init();
-  /* ### Init_PWM "PWM_Port_P" init code ... */
-  PWM_Port_P_Init();
   /* ### Init_RTI "RTI1" init code ... */
   RTI1_Init();
   /* ### IntEEPROM "IEE1" init code ... */
   IEE1_Init();
+  /* ###  Synchro master "SM1" init code ... */
+  SM1_Init();
   __EI();                              /* Enable interrupts */
 }
 

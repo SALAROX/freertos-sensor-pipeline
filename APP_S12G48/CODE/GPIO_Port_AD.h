@@ -6,7 +6,7 @@
 **     Component : Init_GPIO
 **     Version   : Component 01.114, Driver 01.07, CPU db: 3.00.020
 **     Compiler  : CodeWarrior HC12 C Compiler
-**     Date/Time : 17/09/2021, 15:43
+**     Date/Time : 12/07/2022, 20:44
 **     Abstract  :
 **          This file implements the General Purpose Input Output (ADL)
 **          module initialization according to the Peripheral Initialization
@@ -21,20 +21,19 @@
 **             ----------------------------------------------------
 **                Number (on package)  |    Name
 **             ----------------------------------------------------
-**                       4             |  PAD4_KWAD4_AN4
-**                       5             |  PAD5_KWAD5_AN5_ACMPO
+**                       1             |  PAD1_KWAD1_AN1
+**                       2             |  PAD2_KWAD2_AN2
 **                       6             |  PAD6_KWAD6_AN6_ACMPP
-**                       7             |  PAD7_KWAD7_AN7_ACMPM
 **             ----------------------------------------------------
 **
-**          Pin4                                           : PAD4_KWAD4_AN4
-**            Direction                                    : Input
+**          Pin1                                           : PAD1_KWAD1_AN1
+**            Direction                                    : Output
 **            Output value                                 : no initialization
-**            Pull resistor                                : pull up
+**            Pull resistor                                : no initialization
 **            Open drain                                   : push-pull
 **
-**          Pin5                                           : PAD5_KWAD5_AN5_ACMPO
-**            Direction                                    : Input
+**          Pin2                                           : PAD2_KWAD2_AN2
+**            Direction                                    : Output
 **            Output value                                 : no initialization
 **            Pull resistor                                : pull up
 **            Open drain                                   : push-pull
@@ -42,13 +41,7 @@
 **          Pin6                                           : PAD6_KWAD6_AN6_ACMPP
 **            Direction                                    : Input
 **            Output value                                 : no initialization
-**            Pull resistor                                : pull up
-**            Open drain                                   : push-pull
-**
-**          Pin7                                           : PAD7_KWAD7_AN7_ACMPM
-**            Direction                                    : Input
-**            Output value                                 : no initialization
-**            Pull resistor                                : pull up
+**            Pull resistor                                : no pull resistor
 **            Open drain                                   : push-pull
 **
 **          Call Init method                               : yes
@@ -91,6 +84,16 @@ void GPIO_Port_AD_Init(void);
 **     Returns     : Nothing
 ** ===================================================================
 */
+
+/*
+** ===================================================================
+** The interrupt service routine must be implemented by user in one
+** of the user modules (see GPIO_Port_AD.c file for more information).
+** ===================================================================
+*/
+#pragma CODE_SEG __NEAR_SEG NON_BANKED
+__interrupt void ST25_IRQ_OnInterrupt(void);
+#pragma CODE_SEG DEFAULT
 
 /* END GPIO_Port_AD. */
 #endif /* ifndef __GPIO_Port_AD */

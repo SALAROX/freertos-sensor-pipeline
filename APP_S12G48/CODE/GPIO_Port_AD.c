@@ -6,7 +6,7 @@
 **     Component : Init_GPIO
 **     Version   : Component 01.114, Driver 01.07, CPU db: 3.00.020
 **     Compiler  : CodeWarrior HC12 C Compiler
-**     Date/Time : 17/09/2021, 15:43
+**     Date/Time : 12/07/2022, 20:44
 **     Abstract  :
 **          This file implements the General Purpose Input Output (ADL)
 **          module initialization according to the Peripheral Initialization
@@ -21,20 +21,19 @@
 **             ----------------------------------------------------
 **                Number (on package)  |    Name
 **             ----------------------------------------------------
-**                       4             |  PAD4_KWAD4_AN4
-**                       5             |  PAD5_KWAD5_AN5_ACMPO
+**                       1             |  PAD1_KWAD1_AN1
+**                       2             |  PAD2_KWAD2_AN2
 **                       6             |  PAD6_KWAD6_AN6_ACMPP
-**                       7             |  PAD7_KWAD7_AN7_ACMPM
 **             ----------------------------------------------------
 **
-**          Pin4                                           : PAD4_KWAD4_AN4
-**            Direction                                    : Input
+**          Pin1                                           : PAD1_KWAD1_AN1
+**            Direction                                    : Output
 **            Output value                                 : no initialization
-**            Pull resistor                                : pull up
+**            Pull resistor                                : no initialization
 **            Open drain                                   : push-pull
 **
-**          Pin5                                           : PAD5_KWAD5_AN5_ACMPO
-**            Direction                                    : Input
+**          Pin2                                           : PAD2_KWAD2_AN2
+**            Direction                                    : Output
 **            Output value                                 : no initialization
 **            Pull resistor                                : pull up
 **            Open drain                                   : push-pull
@@ -42,13 +41,7 @@
 **          Pin6                                           : PAD6_KWAD6_AN6_ACMPP
 **            Direction                                    : Input
 **            Output value                                 : no initialization
-**            Pull resistor                                : pull up
-**            Open drain                                   : push-pull
-**
-**          Pin7                                           : PAD7_KWAD7_AN7_ACMPM
-**            Direction                                    : Input
-**            Output value                                 : no initialization
-**            Pull resistor                                : pull up
+**            Pull resistor                                : no pull resistor
 **            Open drain                                   : push-pull
 **
 **          Call Init method                               : yes
@@ -64,6 +57,34 @@
 /* MODULE GPIO_Port_AD. */
 
 #include "GPIO_Port_AD.h"
+/*
+** ###################################################################
+**
+**  The interrupt service routine(s) must be implemented
+**  by user in one of the following user modules.
+**
+**  If the "Generate ISR" option is enabled, Processor Expert generates
+**  ISR templates in the CPU event module.
+**
+**  User modules:
+**      Generic_Latch_Bootloader.c
+**      Events.c
+**
+** ###################################################################
+*/
+#pragma CODE_SEG __NEAR_SEG NON_BANKED
+ISR(ST25_IRQ_OnInterrupt)
+        {
+        // NOTE: The routine should include the following actions to obtain
+        //       correct functionality of the hardware.
+        //
+        //      To clear interrupt flag 1 must be written to a bit, which correspods
+        //      to pin which detected an active edge.
+        //      Example: PIF01AD = 0xFF;
+        }
+#pragma CODE_SEG DEFAULT
+
+
 /*
 ** ===================================================================
 **     Method      :  GPIO_Port_AD_Init (component Init_GPIO)
@@ -86,12 +107,14 @@ void GPIO_Port_AD_Init(void)
     /* Clear interrupt flags */
   /* PIF1AD: PIF1AD7=1,PIF1AD6=1,PIF1AD5=1,PIF1AD4=1,PIF1AD3=1,PIF1AD2=1,PIF1AD1=1,PIF1AD0=1 */
   setReg8(PIF1AD, 0xFFU);               
-  /* PPS1AD: PPS1AD7=0,PPS1AD6=0,PPS1AD5=0,PPS1AD4=0 */
-  clrReg8Bits(PPS1AD, 0xF0U);           
-  /* PER1AD: PER1AD7=1,PER1AD6=1,PER1AD5=1,PER1AD4=1 */
-  setReg8Bits(PER1AD, 0xF0U);           
-  /* DDR1AD: DDR1AD7=0,DDR1AD6=0,DDR1AD5=0,DDR1AD4=0 */
-  clrReg8Bits(DDR1AD, 0xF0U);           
+  /* PPS1AD: PPS1AD2=0 */
+  clrReg8Bits(PPS1AD, 0x04U);           
+  /* PER1AD: PER1AD6=0,PER1AD2=1 */
+  clrSetReg8Bits(PER1AD, 0x40U, 0x04U); 
+  /* DDR1AD: DDR1AD6=0,DDR1AD2=1,DDR1AD1=1 */
+  clrSetReg8Bits(DDR1AD, 0x40U, 0x06U); 
+  /* PIE1AD: PIE1AD7=0,PIE1AD6=1,PIE1AD5=0,PIE1AD4=0,PIE1AD3=0,PIE1AD2=0,PIE1AD1=0,PIE1AD0=0 */
+  setReg8(PIE1AD, 0x40U);               
 }
 
 /* END GPIO_Port_AD. */
