@@ -306,30 +306,28 @@ asm(BGND);
       <Device v="TIM"/>
       <group name="Settings">
         <group name="Clock settings">
-          <boolgroup name="Precision Timer" v="Enabled">
-            <Precision_Timer_Prescaler v="1"/>
-          </boolgroup>
+          <boolgroup name="Precision Timer" v="Disabled" />
           <Prescaler v="Bus Clock / 1"/>
           <Frequency v="25000 kHz"/>
           <Clock v="Timer prescaler"/>
         </group>
-        <Fast_Flag_Clear v="yes"/>
-        <Stop_in_wait_mode v="yes"/>
-        <Stop_in_freeze_mode v="yes"/>
+        <Fast_Flag_Clear v="no"/>
+        <Stop_in_wait_mode v="no"/>
+        <Stop_in_freeze_mode v="no"/>
         <list name="Channels" v="0">
         </list>
       </group>
       <group name="Interrupts">
         <group name="Timer overflow">
-          <Timer_overflow v="Enabled"/>
+          <Timer_overflow v="Disabled"/>
           <Interrupt v="Vtimovf"/>
           <Priority v="1"/>
-          <ISR_name v="ivVtimovf"/>
+          <ISR_name v=""/>
         </group>
       </group>
       <group name="Initialization">
         <Call_Init_method v="yes"/>
-        <Timer v="Enabled"/>
+        <Timer v="Disabled"/>
       </group>
     </Properties>
 
@@ -351,53 +349,18 @@ asm(BGND);
         <boolgroup name="Port control" v="Individual pins" />
       </group>
       <boolgroup name="Pins" v="Enabled">
-        <boolgroup name="Pin0" v="Enabled">
-          <Pin v="PS0_RXD0"/>
-          <Pin_signal v="SNS_CLAWB_nNTH_GPI"/>
-          <Direction v="Input"/>
-          <Output_value v="0"/>
-          <Pull_resistor v="pull up"/>
-          <Open_drain v="push-pull"/>
-        </boolgroup>
-        <boolgroup name="Pin1" v="Enabled">
-          <Pin v="PS1_TXD0"/>
-          <Pin_signal v="SNS_CLAWB_nSTH_GPI"/>
-          <Direction v="Input"/>
-          <Output_value v="0"/>
-          <Pull_resistor v="pull up"/>
-          <Open_drain v="push-pull"/>
-        </boolgroup>
+        <boolgroup name="Pin0" v="Disabled" />
+        <boolgroup name="Pin1" v="Disabled" />
         <boolgroup name="Pin2" v="Disabled" />
         <boolgroup name="Pin3" v="Disabled" />
-        <boolgroup name="Pin4" v="Enabled">
-          <Pin v="PS4_PWM4_MISO0"/>
-          <Pin_signal v="IO_AUX_GPI"/>
-          <Direction v="Input"/>
-          <Output_value v="0"/>
-          <Pull_resistor v="pull up"/>
-          <Open_drain v="push-pull"/>
-        </boolgroup>
-        <boolgroup name="Pin5" v="Enabled">
-          <Pin v="PS5_IOC4_MOSI0"/>
-          <Pin_signal v="PWR_LIN_EN_GPO"/>
-          <Direction v="Output"/>
-          <Output_value v="1"/>
-          <Pull_resistor v="no initialization"/>
-          <Open_drain v="push-pull"/>
-        </boolgroup>
-        <boolgroup name="Pin6" v="Enabled">
-          <Pin v="PS6_IOC5_SCK0"/>
-          <Pin_signal v="IO_CAN_STB_GPO"/>
-          <Direction v="Output"/>
-          <Output_value v="0"/>
-          <Pull_resistor v="no initialization"/>
-          <Open_drain v="push-pull"/>
-        </boolgroup>
+        <boolgroup name="Pin4" v="Disabled" />
+        <boolgroup name="Pin5" v="Disabled" />
+        <boolgroup name="Pin6" v="Disabled" />
         <boolgroup name="Pin7" v="Enabled">
           <Pin v="PS7_API_EXTCLK_ECLK_PWM5_SS0"/>
-          <Pin_signal v="MCU_RXMUX_SEL_GPO"/>
+          <Pin_signal v="CAN_STB_GPO"/>
           <Direction v="Output"/>
-          <Output_value v="0"/>
+          <Output_value v="1"/>
           <Pull_resistor v="pull down"/>
           <Open_drain v="push-pull"/>
         </boolgroup>
@@ -426,40 +389,33 @@ asm(BGND);
       </group>
       <boolgroup name="Pins" v="Enabled">
         <boolgroup name="Pin0" v="Disabled" />
-        <boolgroup name="Pin1" v="Disabled" />
+        <boolgroup name="Pin1" v="Enabled">
+          <Pin v="PAD1_KWAD1_AN1"/>
+          <Pin_signal v="IO_DBG_1"/>
+          <Direction v="Output"/>
+          <Output_value v="0"/>
+          <Pull_resistor v="no initialization"/>
+          <Open_drain v="push-pull"/>
+        </boolgroup>
         <boolgroup name="Pin2" v="Enabled">
           <Pin v="PAD2_KWAD2_AN2"/>
-          <Pin_signal v="SNS_PAWL_IPT"/>
-          <Direction v="Input"/>
+          <Pin_signal v="IO_DBG_2"/>
+          <Direction v="Output"/>
           <Output_value v="0"/>
           <Pull_resistor v="pull up"/>
           <Open_drain v="push-pull"/>
         </boolgroup>
-        <boolgroup name="Pin3" v="Enabled">
-          <Pin v="PAD3_KWAD3_AN3"/>
-          <Pin_signal v="SNS_MANREL_IPT"/>
+        <boolgroup name="Pin3" v="Disabled" />
+        <boolgroup name="Pin4" v="Disabled" />
+        <boolgroup name="Pin5" v="Disabled" />
+        <boolgroup name="Pin6" v="Enabled">
+          <Pin v="PAD6_KWAD6_AN6_ACMPP"/>
+          <Pin_signal v="SNS_MANRELB_IPT"/>
           <Direction v="Input"/>
           <Output_value v="0"/>
-          <Pull_resistor v="pull up"/>
+          <Pull_resistor v="no pull resistor"/>
           <Open_drain v="push-pull"/>
         </boolgroup>
-        <boolgroup name="Pin4" v="Enabled">
-          <Pin v="PAD4_KWAD4_AN4"/>
-          <Pin_signal v="SNS_CLAWA_nSTH_IPT"/>
-          <Direction v="Input"/>
-          <Output_value v="0"/>
-          <Pull_resistor v="pull up"/>
-          <Open_drain v="push-pull"/>
-        </boolgroup>
-        <boolgroup name="Pin5" v="Enabled">
-          <Pin v="PAD5_KWAD5_AN5_ACMPO"/>
-          <Pin_signal v="SNS_CLAWA_nNTH_IPT"/>
-          <Direction v="Input"/>
-          <Output_value v="0"/>
-          <Pull_resistor v="pull up"/>
-          <Open_drain v="push-pull"/>
-        </boolgroup>
-        <boolgroup name="Pin6" v="Disabled" />
         <boolgroup name="Pin7" v="Disabled" />
       </boolgroup>
       <group name="Interrupts">
@@ -471,10 +427,10 @@ asm(BGND);
           <Pin_3_Interrupt v="Disabled"/>
           <Pin_4_Interrupt v="Disabled"/>
           <Pin_5_Interrupt v="Disabled"/>
-          <Pin_6_Interrupt v="Disabled"/>
+          <Pin_6_Interrupt v="Enabled"/>
           <Pin_7_Interrupt v="Disabled"/>
           <Interrupt_Priority v="1"/>
-          <ISR_name v=""/>
+          <ISR_name v="ST25_IRQ_OnInterrupt"/>
         </group>
       </group>
       <group name="Initialization">
@@ -520,25 +476,10 @@ asm(BGND);
       </group>
       <group name="Pins/Signals">
         <boolgroup name="External trigger" v="no" />
-        <list name="ADC input pins" v="4">
+        <list name="ADC input pins" v="1">
           <group name="Input Pin0">
             <Pin v="PAD0_KWAD0_AN0"/>
-            <Pin_Signal v="HBR_HSD_ISENSB_ADC"/>
-            <Digital_Input v="Disabled"/>
-          </group>
-          <group name="Input Pin1">
-            <Pin v="PAD1_KWAD1_AN1"/>
-            <Pin_Signal v="HBR_HSD_ISENSA_ADC"/>
-            <Digital_Input v="Disabled"/>
-          </group>
-          <group name="Input Pin2">
-            <Pin v="PAD6_KWAD6_AN6_ACMPP"/>
-            <Pin_Signal v="SNS_TSENS_ADC"/>
-            <Digital_Input v="Disabled"/>
-          </group>
-          <group name="Input Pin3">
-            <Pin v="PAD7_KWAD7_AN7_ACMPM"/>
-            <Pin_Signal v="PWR_VSENS_ADC"/>
+            <Pin_Signal v="SUPPLY_VOLTAGE"/>
             <Digital_Input v="Disabled"/>
           </group>
         </list>
@@ -599,15 +540,15 @@ asm(BGND);
         </boolgroup>
         <boolgroup name="Pin2" v="Enabled">
           <Pin v="PT2_IOC2"/>
-          <Pin_signal v="PWR_AUXSUP_nEN_GPO"/>
+          <Pin_signal v="PWR_nVDDAUXEN_GPO"/>
           <Direction v="Output"/>
-          <Output_value v="1"/>
-          <Pull_resistor v="no initialization"/>
+          <Output_value v="0"/>
+          <Pull_resistor v="pull down"/>
           <Open_drain v="push-pull"/>
         </boolgroup>
         <boolgroup name="Pin3" v="Enabled">
           <Pin v="PT3_IOC3"/>
-          <Pin_signal v="DEBUG_PIN"/>
+          <Pin_signal v="HBR_HSD_ISENSDIS_GPO"/>
           <Direction v="Output"/>
           <Output_value v="0"/>
           <Pull_resistor v="no initialization"/>
@@ -632,53 +573,24 @@ asm(BGND);
   </Bean>
 
   <Bean name="GPIO_Port_P" type="Init_GPIO">
-    <Enabled v="Y"/>
+    <Enabled v="N"/>
 
     <Properties>
       <Component_name v="GPIO_Port_P"/>
-      <Device v="P"/>
+      <Device v=""/>
       <group name="Settings">
         <boolgroup name="Port control" v="Individual pins" />
       </group>
       <boolgroup name="Pins" v="Enabled">
         <boolgroup name="Pin0" v="Disabled" />
         <boolgroup name="Pin1" v="Disabled" />
-        <boolgroup name="Pin2" v="Enabled">
-          <Pin v="PP2_KWP2_ETRIG2_PWM2"/>
-          <Pin_signal v="HBR_HSD_INA_GPO"/>
-          <Direction v="Output"/>
-          <Output_value v="0"/>
-          <Pull_resistor v="pull down"/>
-          <Open_drain v="push-pull"/>
-        </boolgroup>
-        <boolgroup name="Pin3" v="Enabled">
-          <Pin v="PP3_KWP3_ETRIG3_PWM3"/>
-          <Pin_signal v="HBR_HSD_INB_GPO"/>
-          <Direction v="Output"/>
-          <Output_value v="0"/>
-          <Pull_resistor v="pull down"/>
-          <Open_drain v="push-pull"/>
-        </boolgroup>
+        <boolgroup name="Pin2" v="Disabled" />
+        <boolgroup name="Pin3" v="Disabled" />
         <boolgroup name="Pin4" v="Disabled" />
         <boolgroup name="Pin5" v="Disabled" />
         <boolgroup name="Pin6" v="Disabled" />
         <boolgroup name="Pin7" v="Disabled" />
       </boolgroup>
-      <group name="Interrupts">
-        <group name="Keypad Wakeup Interrupt">
-          <Interrupt v="Vportp"/>
-          <Pin_0_Interrupt v="Disabled"/>
-          <Pin_1_Interrupt v="Disabled"/>
-          <Pin_2_Interrupt v="Disabled"/>
-          <Pin_3_Interrupt v="Disabled"/>
-          <Pin_4_Interrupt v="Disabled"/>
-          <Pin_5_Interrupt v="Disabled"/>
-          <Pin_6_Interrupt v="Disabled"/>
-          <Pin_7_Interrupt v="Disabled"/>
-          <Interrupt_Priority v="1"/>
-          <ISR_name v=""/>
-        </group>
-      </group>
       <group name="Initialization">
         <Call_Init_Method v="yes"/>
       </group>
@@ -693,7 +605,7 @@ asm(BGND);
   </Bean>
 
   <Bean name="PWM_Port_P" type="Init_PWM">
-    <Enabled v="Y"/>
+    <Enabled v="N"/>
 
     <Properties>
       <Component_name v="PWM_Port_P"/>
@@ -717,7 +629,7 @@ asm(BGND);
       </group>
       <list name="Channels" v="2">
         <group name="Channel0">
-          <Counter v="PWM0"/>
+          <Counter v=""/>
           <PWM_enabled v="Enabled"/>
           <Polarity v="Low to high"/>
           <Clock_Select v="Clock A"/>
@@ -727,14 +639,14 @@ asm(BGND);
           <Channel_Duty v="0"/>
           <Duty_time v="-"/>
           <boolgroup name="Pin allocation" v="Enabled">
-            <Pin v="PP0_KWP0_ETRIG0_API_EXTCLK_PWM0"/>
+            <Pin v=""/>
             <Pin_signal v="HBR_LSD_INA_PWM"/>
             <Pull_resistor v="no initialization"/>
             <Pin_open_drain v="push-pull"/>
           </boolgroup>
         </group>
         <group name="Channel1">
-          <Counter v="PWM1"/>
+          <Counter v=""/>
           <PWM_enabled v="Enabled"/>
           <Polarity v="Low to high"/>
           <Clock_Select v="Clock A"/>
@@ -744,7 +656,7 @@ asm(BGND);
           <Channel_Duty v="0"/>
           <Duty_time v="-"/>
           <boolgroup name="Pin allocation" v="Enabled">
-            <Pin v="PP1_KWP1_ETRIG1_ECLKX2_PWM1"/>
+            <Pin v=""/>
             <Pin_signal v="HBR_LSD_INB_PWM"/>
             <Pull_resistor v="no initialization"/>
             <Pin_open_drain v="push-pull"/>
@@ -917,6 +829,94 @@ asm(BGND);
     </Methods>
 
     <Events>
+    </Events>
+  </Bean>
+
+  <Bean name="SM1" type="SynchroMaster">
+    <Enabled v="Y"/>
+
+    <Properties>
+      <Component_name v="SM1"/>
+      <Channel v="SPI0"/>
+      <boolgroup name="Interrupt service/event" v="Enabled">
+        <Interrupt v=""/>
+        <Interrupt_from_input v="Vspi0"/>
+        <Interrupt_input_priority v="medium priority"/>
+        <Interrupt_from_output v="Vspi0"/>
+        <Interrupt_output_priority v="medium priority"/>
+        <Input_buffer_size v="0"/>
+        <Output_buffer_size v="0"/>
+      </boolgroup>
+      <group name="Settings">
+        <Width v="8 bits"/>
+        <Bidirectional_mode v="Disabled"/>
+        <boolgroup name="Input pin" v="Enabled">
+          <Pin v="PS4_PWM4_MISO0"/>
+          <Pin_signal v=""/>
+        </boolgroup>
+        <boolgroup name="Output pin" v="Enabled">
+          <Pin v="PS5_IOC4_MOSI0"/>
+          <Pin_signal v=""/>
+        </boolgroup>
+        <group name="Clock pin">
+          <Pin v="PS6_IOC5_SCK0"/>
+          <Pin_signal v=""/>
+        </group>
+        <boolgroup name="Slave select pin" v="Disabled" />
+        <Clock_edge sel_value="rising edge" v="rising or falling edge"/>
+        <Shift_clock_rate v="0.320 &#181;s"/>
+        <Empty_character v="0"/>
+        <Ignore_empty_char_ v="no"/>
+        <Send_MSB_first v="no"/>
+        <Shift_clock_idle_polarity v="Low"/>
+        <Fault_mode v="Disabled"/>
+        <Stop_in_wait_mode v="no"/>
+      </group>
+      <group name="Initialization">
+        <Direction_in_init_ v="Input"/>
+        <Enabled_in_init__code v="yes"/>
+        <Events_enabled_in_init_ v="yes"/>
+      </group>
+      <group name="CPU clock/speed selection">
+        <High_speed_mode v="This component enabled"/>
+        <Low_speed_mode v="This component disabled"/>
+        <Slow_speed_mode v="This component disabled"/>
+      </group>
+    </Properties>
+
+    <Methods>
+      <Enable v="generate code"/>
+      <Disable v="generate code"/>
+      <EnableEvent v="don&apos;t generate code"/>
+      <DisableEvent v="don&apos;t generate code"/>
+      <RecvChar v="generate code"/>
+      <SendChar v="generate code"/>
+      <RecvBlock v="don&apos;t generate code"/>
+      <SendBlock v="don&apos;t generate code"/>
+      <ClearRxBuf v="don&apos;t generate code"/>
+      <ClearTxBuf v="don&apos;t generate code"/>
+      <CharsInRxBuf v="generate code"/>
+      <GetCharsInRxBuf v="generate code"/>
+      <CharsInTxBuf v="generate code"/>
+      <GetCharsInTxBuf v="generate code"/>
+      <SetBaudRateMode v="don&apos;t generate code"/>
+      <SetShiftClockPolarity v="don&apos;t generate code"/>
+      <SetIdleClockPolarity v="don&apos;t generate code"/>
+      <GetError v="don&apos;t generate code"/>
+      <SetDir v="don&apos;t generate code"/>
+    </Methods>
+
+    <Events>
+      <Event_module_name v="Events"/>
+      <event name="BeforeNewSpeed" v="don&apos;t generate code" />
+      <event name="AfterNewSpeed" v="don&apos;t generate code" />
+      <event name="OnRxChar" v="don&apos;t generate code" />
+      <event name="OnRxCharExt" v="don&apos;t generate code" />
+      <event name="OnTxChar" v="don&apos;t generate code" />
+      <event name="OnFullRxBuf" v="don&apos;t generate code" />
+      <event name="OnFreeTxBuf" v="don&apos;t generate code" />
+      <event name="OnError" v="don&apos;t generate code" />
+      <event name="OnFault" v="don&apos;t generate code" />
     </Events>
   </Bean>
 

@@ -24,6 +24,7 @@
 #include "GPIO_Port_AD.h"
 #include "ADC_Port_AD.h"
 #include "GPIO_Port_T.h"
+#include "GPIO_Port_P.h"
 #include "RTI1.h"
 #include "IEE1.h"
 #include "SM1.h"
@@ -99,6 +100,9 @@ uint8_t failure_PDU_SID;
 
 /* END VARIABLES BOOTLOADER*/
 
+/*NFC Reader Variables*/
+
+
 /******************************************************************************
  *                          External References                               *
  ******************************************************************************/
@@ -121,8 +125,9 @@ void main(void)
 
   /* Write your code here */
   // PTT_PTT3 ^= 1;
+
   /*CAN TRCV Normal Mode*/
-  PTS_PTS7 = 0;
+  CAN_STB_MODE(NORMAL);
 
   CAN_drv_init();
 

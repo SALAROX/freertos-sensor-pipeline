@@ -73,6 +73,20 @@ void GPIO_Port_S_Init(void)
 
 /* END GPIO_Port_S. */
 
+void CAN_STB_MODE(CAN_STB_MODE_t Mode)
+{
+  if(Mode == STANDBY)
+  {
+    /*StadBy*/
+    PTS_PTS7 = 1;
+  }
+  else
+  {
+    /*Normal*/
+    PTS_PTS7 = 0;
+  }
+}
+
 /*
 ** ###################################################################
 **

@@ -6,7 +6,7 @@
 **     Component : Init_GPIO
 **     Version   : Component 01.114, Driver 01.07, CPU db: 3.00.020
 **     Compiler  : CodeWarrior HC12 C Compiler
-**     Date/Time : 28/07/2021, 12:05
+**     Date/Time : 12/07/2022, 21:43
 **     Abstract  :
 **          This file implements the General Purpose Input Output (P)
 **          module initialization according to the Peripheral Initialization
@@ -21,20 +21,13 @@
 **             ----------------------------------------------------
 **                Number (on package)  |    Name
 **             ----------------------------------------------------
-**                       2             |  PP2_KWP2_ETRIG2_PWM2
-**                       3             |  PP3_KWP3_ETRIG3_PWM3
+**                       1             |  PP1_KWP1_ETRIG1_ECLKX2_PWM1
 **             ----------------------------------------------------
 **
-**          Pin2                                           : PP2_KWP2_ETRIG2_PWM2
+**          Pin1                                           : PP1_KWP1_ETRIG1_ECLKX2_PWM1
 **            Direction                                    : Output
-**            Output value                                 : 0
-**            Pull resistor                                : pull down
-**            Open drain                                   : push-pull
-**
-**          Pin3                                           : PP3_KWP3_ETRIG3_PWM3
-**            Direction                                    : Output
-**            Output value                                 : 0
-**            Pull resistor                                : pull down
+**            Output value                                 : 1
+**            Pull resistor                                : no pull resistor
 **            Open drain                                   : push-pull
 **
 **          Call Init method                               : yes

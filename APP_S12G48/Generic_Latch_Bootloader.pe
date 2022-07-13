@@ -1,10 +1,10 @@
 Processor Expert Version 0446
-ProjectModificationStamp=39
+ProjectModificationStamp=41
 
 [Header]
 Name=Generic_Latch_Bootloader
 SavedBy=CTLWKS016
-ModificationStamp=39
+ModificationStamp=41
 Date=2022-07-12
 Product=Processor Expert version 3.05 for Freescale HCS12(X) family
 IDE=CW Plug-In IDE
@@ -3370,7 +3370,7 @@ Value4=Yes
 ItemId5=12
 Value5=Yes
 ItemId6=13
-Value6=No
+Value6=Yes
 ItemId7=14
 Value7=No
 ItemId8=18
@@ -4303,7 +4303,7 @@ List=Event
 [Init_GPIO_HCS12:GPIO_Port_S]
 CompNumb=8
 CompEnabled=Yes
-GenCodeMode=ALWAYS_WRITE
+GenCodeMode=DONT_WRITE
 IconName=PERIPHINSP
 Comment=0
 Template=
@@ -4607,7 +4607,7 @@ Expanded=No
 List=GrupItem
 [ItemState]
 ItemSymbol=Pin0
-Value=PS0_RXD0
+Value=
 [ItemState]
 ItemSymbol=Pin0Signal
 ReadOnly=No
@@ -4713,7 +4713,7 @@ Expanded=No
 List=GrupItem
 [ItemState]
 ItemSymbol=Pin1
-Value=PS1_TXD0
+Value=
 [ItemState]
 ItemSymbol=Pin1Signal
 ReadOnly=No
@@ -5001,7 +5001,7 @@ Expanded=No
 List=GrupItem
 [ItemState]
 ItemSymbol=Pin4
-Value=PS4_PWM4_MISO0
+Value=
 [ItemState]
 ItemSymbol=Pin4Signal
 ReadOnly=No
@@ -5092,7 +5092,7 @@ Expanded=No
 List=GrupItem
 [ItemState]
 ItemSymbol=Pin5
-Value=PS5_IOC4_MOSI0
+Value=
 [ItemState]
 ItemSymbol=Pin5Signal
 ReadOnly=No
@@ -5183,7 +5183,7 @@ Expanded=No
 List=GrupItem
 [ItemState]
 ItemSymbol=Pin6
-Value=PS6_IOC5_SCK0
+Value=
 [ItemState]
 ItemSymbol=Pin6Signal
 ReadOnly=No
@@ -5649,7 +5649,7 @@ List=Event
 [Init_GPIO_HCS12:GPIO_Port_AD]
 CompNumb=10
 CompEnabled=Yes
-GenCodeMode=ALWAYS_WRITE
+GenCodeMode=DONT_WRITE
 IconName=PERIPHINSP
 Comment=0
 Template=
@@ -6347,7 +6347,7 @@ Expanded=No
 List=GrupItem
 [ItemState]
 ItemSymbol=Pin4
-Value=PAD4_KWAD4_AN4
+Value=
 [ItemState]
 ItemSymbol=Pin4Signal
 ReadOnly=No
@@ -6438,7 +6438,7 @@ Expanded=No
 List=GrupItem
 [ItemState]
 ItemSymbol=Pin5
-Value=PAD5_KWAD5_AN5_ACMPO
+Value=
 [ItemState]
 ItemSymbol=Pin5Signal
 ReadOnly=No
@@ -6620,7 +6620,7 @@ Expanded=No
 List=GrupItem
 [ItemState]
 ItemSymbol=Pin7
-Value=PAD7_KWAD7_AN7_ACMPM
+Value=
 [ItemState]
 ItemSymbol=Pin7Signal
 ReadOnly=No
@@ -6995,7 +6995,7 @@ List=Event
 [Init_ADC_HCS12:ADC_Port_AD]
 CompNumb=11
 CompEnabled=Yes
-GenCodeMode=ALWAYS_WRITE
+GenCodeMode=DONT_WRITE
 IconName=PERIPHINSP
 Comment=0
 Template=
@@ -8875,7 +8875,7 @@ List=Event
 
 [Init_GPIO_HCS12:GPIO_Port_P]
 CompNumb=13
-CompEnabled=No
+CompEnabled=Yes
 GenCodeMode=ALWAYS_WRITE
 IconName=PERIPHINSP
 Comment=0
@@ -8893,7 +8893,7 @@ Value=GPIO_Port_P
 ItemSymbol=PeriphDevice
 ReadOnly=No
 UserReadOnly=No
-Value=
+Value=P
 [ItemState]
 ItemSymbol=SettingsGrp
 ReadOnly=No
@@ -9138,16 +9138,16 @@ Expanded=No
 List=GrupItem
 [ItemState]
 ItemSymbol=HiddenPin0
-Value=
+Value=PP0_KWP0_ETRIG0_API_EXTCLK_PWM0
 [ItemState]
 ItemSymbol=HiddenPin1
-Value=
+Value=PP1_KWP1_ETRIG1_ECLKX2_PWM1
 [ItemState]
 ItemSymbol=HiddenPin2
-Value=
+Value=PP2_KWP2_ETRIG2_PWM2
 [ItemState]
 ItemSymbol=HiddenPin3
-Value=
+Value=PP3_KWP3_ETRIG3_PWM3
 [ItemState]
 ItemSymbol=HiddenPin4
 Value=
@@ -9180,7 +9180,7 @@ Expanded=No
 List=GrupItem
 [ItemState]
 ItemSymbol=Pin0
-Value=PP0_KWP0_ETRIG0_API_EXTCLK_PWM0
+Value=
 [ItemState]
 ItemSymbol=Pin0Signal
 ReadOnly=No
@@ -9279,8 +9279,8 @@ List=GrupItem
 ItemSymbol=EnPin1
 ReadOnly=No
 UserReadOnly=No
-Value=No
-Expanded=No
+Value=Yes
+Expanded=Yes
 
 [Childs]
 List=GrupItem
@@ -9291,26 +9291,26 @@ Value=PP1_KWP1_ETRIG1_ECLKX2_PWM1
 ItemSymbol=Pin1Signal
 ReadOnly=No
 UserReadOnly=No
-Value=
+Value=SPI_SS
 [ItemState]
 ItemSymbol=Pin1Dir
 ReadOnly=No
 UserReadOnly=No
 TypeSpecNameState=typeOutputInput
-Index=1
-EnumSymbVal=Input
+Index=0
+EnumSymbVal=Output
 [ItemState]
 ItemSymbol=Pin1InitValue
 ReadOnly=No
 UserReadOnly=No
-Value=0
+Value=1
 Base=2
-Index=0
+Index=-1
 [ItemState]
 ItemSymbol=Pin1PullMode
 ReadOnly=No
 UserReadOnly=No
-Index=0
+Index=1
 [ItemState]
 ItemSymbol=Pin1ODE
 ReadOnly=Yes
@@ -9377,7 +9377,7 @@ Expanded=No
 List=GrupItem
 [ItemState]
 ItemSymbol=Pin2
-Value=PP2_KWP2_ETRIG2_PWM2
+Value=
 [ItemState]
 ItemSymbol=Pin2Signal
 ReadOnly=No
@@ -9483,7 +9483,7 @@ Expanded=No
 List=GrupItem
 [ItemState]
 ItemSymbol=Pin3
-Value=PP3_KWP3_ETRIG3_PWM3
+Value=
 [ItemState]
 ItemSymbol=Pin3Signal
 ReadOnly=No
@@ -9961,7 +9961,7 @@ Expanded=Yes
 List=GrupItem
 [ItemState]
 ItemSymbol=IntKWI
-Value=
+Value=Vportp
 [ItemState]
 ItemSymbol=Pin0IntEnable
 ReadOnly=No
@@ -10222,7 +10222,7 @@ List=Event
 [Init_PWM_HCS12:PWM_Port_P]
 CompNumb=14
 CompEnabled=No
-GenCodeMode=ALWAYS_WRITE
+GenCodeMode=DONT_WRITE
 IconName=PERIPHINSP
 Comment=0
 Template=
@@ -12174,7 +12174,7 @@ List=Event
 [SynchroMaster:SM1]
 CompNumb=26
 CompEnabled=Yes
-GenCodeMode=CHECK_n_WRITE
+GenCodeMode=DONT_WRITE
 IconName=PHONE
 Comment=0
 Template=

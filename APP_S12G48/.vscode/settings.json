@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "can_drv.h": "c"
+        "can_drv.h": "c",
+        "gpio_port_s.h": "c"
     }
 }

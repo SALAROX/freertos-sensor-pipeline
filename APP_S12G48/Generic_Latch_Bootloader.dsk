@@ -63,7 +63,7 @@ Rect=[741|90|781|786]
 ViewMode=PrphRegInit
 SortRegsByAddr=Yes
 GroupRegisters=No
-Peripheral=MSCAN
+Peripheral=CPU
 
 [Editor]
 Rect=[0|0|0|0]

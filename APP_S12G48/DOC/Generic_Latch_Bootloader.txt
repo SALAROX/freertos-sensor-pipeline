@@ -34,6 +34,11 @@ Module "GPIO_Port_T" (component Init_GPIO_HCS12)
                 settings. Call this method in the user code to initialize the module. By default, the method is called by PE 
                 automatically; see "Call Init method" property of the component for more details.
 
+Module "GPIO_Port_P" (component Init_GPIO_HCS12)
+   - GPIO_Port_P_Init -This method initializes registers of the GPIO module according to this Peripheral Initialization 
+                settings. Call this method in the user code to initialize the module. By default, the method is called by PE 
+                automatically; see "Call Init method" property of the component for more details.
+
 Module "RTI1"      (component Init_RTI_HCS12)
    - RTI1_Init -This method initializes registers of the RTI module according to this Peripheral Initialization settings. Call 
                 this method in user code to initialize the module. By default, the method is called by PE automatically; see 

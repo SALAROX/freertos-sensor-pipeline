@@ -54,8 +54,14 @@
 
 #include "Cpu.h"
 
+typedef enum
+{
+	NORMAL = 0,
+	STANDBY
+} CAN_STB_MODE_t;
 
 void GPIO_Port_S_Init(void);
+void CAN_STB_MODE(CAN_STB_MODE_t Mode);
 /*
 ** ===================================================================
 **     Method      :  GPIO_Port_S_Init (component Init_GPIO)
