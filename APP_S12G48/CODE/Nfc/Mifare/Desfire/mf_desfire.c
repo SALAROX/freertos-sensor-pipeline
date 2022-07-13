@@ -857,8 +857,8 @@ MFDF_RetCode_t MFDF_ChangeKey(MFDF_Device_t *dev, MFDF_KeyType_t KeyType, uint8_
 	MFDF_MEMCPY(Buf+1, CipherBuf, TxLen);
 	TxLen++;
 	
-	platformLog("TxLen: %d, Tx:\r\n", TxLen);
-	platformLogHEX(Buf, TxLen, 16, TRUE);
+	// platformLog("TxLen: %d, Tx:\r\n", TxLen);
+	// platformLogHEX(Buf, TxLen, 16, TRUE);
 	
 	/* Send buffer to PICC */
 	MFDF_EXIT_ON_ERR(err, MFDF_Transceive(dev, MFDF_CMD_SEC_CHANGE_KEY, Buf, TxLen, NULL, sizeof(Buf), NULL));
@@ -1074,7 +1074,7 @@ MFDF_RetCode_t MFDF_GetVersion(MFDF_Device_t *dev, MFDF_DevInfo_t *DevInfo)
 					return MFDF_ERR_FRAME_FAIL;
 				}
 			
-				ST_MEMCPY(DevInfo->FrameOne, Buf, sizeof(DevInfo->FrameOne));
+				ST_MEMCPY((DevInfo->FrameOne), Buf, sizeof(DevInfo->FrameOne));
 				
 				FrameNum++;
 				

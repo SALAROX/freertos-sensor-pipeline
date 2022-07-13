@@ -71,19 +71,22 @@ static uint8_t checkchip_debug;
 void NFC_init(void)
 {
 #ifdef IMPLEMENT_NFC
-
+debug_var = 10;
 	/* Wait for full system power-up */
 	platformDelay( 250U );
+	debug_var = 11;
 
 	/* Initialize RFAL */
 	rfalAnalogConfigInitialize();
+	debug_var = 12;
 
 	if(rfalInitialize() != ST_ERR_NONE )
 	{
+		debug_var = 13;
 		/*NFC Trcv failure*/
 		// fm29_nfc_readers_can_v1_0_interior_nfc_int_0x200_status_frame.nfc_int_scu_sts_failure = 4; /*RF Failure*/
 	}
-
+debug_var = 14;
 	/*
 	 * Antenna Calibration
 	 */
@@ -133,107 +136,107 @@ void NFC_Task(void)
 
 		/* Polling for NFC-A Tag */	  
 		if( rfal_PollNFCA(nfcaDev, 1, &nfcaDevCnt) == ST_ERR_NONE )
-		{
+		{debug_var = 15;
 			/* Initialise ISODep */
-			rfalIsoDepInitialize();
+			// rfalIsoDepInitialize();
 
 			/* IsoDep Activation  */
-			if( rfalIsoDepPollAHandleActivation((rfalIsoDepFSxI)RFAL_ISODEP_FSDI_DEFAULT, RFAL_ISODEP_NO_DID, RFAL_BR_424, &IsoDevice) == ST_ERR_NONE )
-			{
-				/*
-				 * =================================================================================================
-				 * Check for DESFire tag
-				 * =================================================================================================
-				 */
-				if( MFDF_DeviceInit(&MfdfDevice, &nfcaDev[0], &IsoDevice) == MFDF_ERR_NONE )
-				{
-					/*Desfire Tag Detected*/
-					fm29_nfc_readers_can_v1_0_interior_nfc_int_0x200_status_frame.nfc_int_scu_sts_nfc_tag_status = NFC_TAG_PASSIVE;
+			// if( rfalIsoDepPollAHandleActivation((rfalIsoDepFSxI)RFAL_ISODEP_FSDI_DEFAULT, RFAL_ISODEP_NO_DID, RFAL_BR_424, &IsoDevice) == ST_ERR_NONE )
+			// {
+			// 	/*
+			// 	 * =================================================================================================
+			// 	 * Check for DESFire tag
+			// 	 * =================================================================================================
+			// 	 */
+			// 	if( MFDF_DeviceInit(&MfdfDevice, &nfcaDev[0], &IsoDevice) == MFDF_ERR_NONE )
+			// 	{
+			// 		/*Desfire Tag Detected*/
+			// 		// fm29_nfc_readers_can_v1_0_interior_nfc_int_0x200_status_frame.nfc_int_scu_sts_nfc_tag_status = NFC_TAG_PASSIVE;
 
-					/* Select Application */
-					if( MFDF_AppSelect(&MfdfDevice, 1) == MFDF_ERR_NONE )
-					{
-						/* Authenticate with the application key */
-						memset(Mfdf_DES_Key, 0x00, sizeof(Mfdf_DES_Key));
+			// 		/* Select Application */
+			// 		if( MFDF_AppSelect(&MfdfDevice, 1) == MFDF_ERR_NONE )
+			// 		{
+			// 			/* Authenticate with the application key */
+			// 			memset(Mfdf_DES_Key, 0x00, sizeof(Mfdf_DES_Key));
 
-						if( MFDF_Authenticate(&MfdfDevice, MFDF_AUTHENTICATION_DES_NATIVE, 0, &Mfdf_DES_Key, MFDF_KEY_DES_2K3DES) == MFDF_ERR_NONE ) 
-						{
-							/* Read Data from File */
-							memset(DataBuf, 0, sizeof(DataBuf));
+			// 			if( MFDF_Authenticate(&MfdfDevice, MFDF_AUTHENTICATION_DES_NATIVE, 0, &Mfdf_DES_Key, MFDF_KEY_DES_2K3DES) == MFDF_ERR_NONE ) 
+			// 			{
+			// 				/* Read Data from File */
+			// 				memset(DataBuf, 0, sizeof(DataBuf));
 
-							if( MFDF_ReadData(&MfdfDevice, 0, 0, 0, DataBuf, sizeof(DataBuf), &DataLen) == MFDF_ERR_NONE )
-							{								  
-								if( strcmp((char*)DataBuf, "4DOOR1") == 0 )
-								{
-									debug_var = 4;
-									/*Update Auth Status*/
-									// fm29_nfc_readers_can_v1_0_interior_nfc_int_0x200_status_frame.nfc_int_scu_sts_nfc_tag_auth_status = NFC_AUTHENTICATION_SUCCEED;
-									// fm29_nfc_readers_can_v1_0_interior_nfc_int_0x200_status_frame.nfc_int_scu_sts_key_id = 1;
-								}
-								else if( strcmp((char*)DataBuf, "4DOOR2") == 0 )
-								{
-									debug_var = 4;
-									/*Update Auth Status*/
-									// fm29_nfc_readers_can_v1_0_interior_nfc_int_0x200_status_frame.nfc_int_scu_sts_nfc_tag_auth_status = NFC_AUTHENTICATION_SUCCEED;
-									// fm29_nfc_readers_can_v1_0_interior_nfc_int_0x200_status_frame.nfc_int_scu_sts_key_id = 2;
-								}
-								else
-								{
-									/*Tamper Attempt*/
-									// fm29_nfc_readers_can_v1_0_interior_nfc_int_0x200_status_frame.nfc_int_scu_sts_nfc_tag_auth_status = NFC_AUTHENTICATION_TAMPER_ATTEMPT;
-								}
-							}
-							else
-							{
-								/*Authentication Failed*/
-								// fm29_nfc_readers_can_v1_0_interior_nfc_int_0x200_status_frame.nfc_int_scu_sts_nfc_tag_auth_status = NFC_AUTHENTICATION_FAILED;
-							}
-						}
-						else
-						{
-							/*Authentication Failed*/
-							// fm29_nfc_readers_can_v1_0_interior_nfc_int_0x200_status_frame.nfc_int_scu_sts_nfc_tag_auth_status = NFC_AUTHENTICATION_FAILED;
-						}
-					}
-					else
-					{
-						/*Do Nothing*/
-					}
-					/*Send Status Frame*/
-					// ComSend_interior_nfc_int_0x200_status_frame_frame();
-				}
-				/*
-				 * =================================================================================================
-				 * Check for HCE tag
-				 * =================================================================================================
-				 */
+			// 				if( MFDF_ReadData(&MfdfDevice, 0, 0, 0, DataBuf, sizeof(DataBuf), &DataLen) == MFDF_ERR_NONE )
+			// 				{								  
+			// 					if( strcmp((char*)DataBuf, "4DOOR1") == 0 )
+			// 					{
+			// 						debug_var = 4;
+			// 						/*Update Auth Status*/
+			// 						// fm29_nfc_readers_can_v1_0_interior_nfc_int_0x200_status_frame.nfc_int_scu_sts_nfc_tag_auth_status = NFC_AUTHENTICATION_SUCCEED;
+			// 						// fm29_nfc_readers_can_v1_0_interior_nfc_int_0x200_status_frame.nfc_int_scu_sts_key_id = 1;
+			// 					}
+			// 					else if( strcmp((char*)DataBuf, "4DOOR2") == 0 )
+			// 					{
+			// 						debug_var = 4;
+			// 						/*Update Auth Status*/
+			// 						// fm29_nfc_readers_can_v1_0_interior_nfc_int_0x200_status_frame.nfc_int_scu_sts_nfc_tag_auth_status = NFC_AUTHENTICATION_SUCCEED;
+			// 						// fm29_nfc_readers_can_v1_0_interior_nfc_int_0x200_status_frame.nfc_int_scu_sts_key_id = 2;
+			// 					}
+			// 					else
+			// 					{
+			// 						/*Tamper Attempt*/
+			// 						// fm29_nfc_readers_can_v1_0_interior_nfc_int_0x200_status_frame.nfc_int_scu_sts_nfc_tag_auth_status = NFC_AUTHENTICATION_TAMPER_ATTEMPT;
+			// 					}
+			// 				}
+			// 				else
+			// 				{
+			// 					/*Authentication Failed*/
+			// 					// fm29_nfc_readers_can_v1_0_interior_nfc_int_0x200_status_frame.nfc_int_scu_sts_nfc_tag_auth_status = NFC_AUTHENTICATION_FAILED;
+			// 				}
+			// 			}
+			// 			else
+			// 			{
+			// 				/*Authentication Failed*/
+			// 				// fm29_nfc_readers_can_v1_0_interior_nfc_int_0x200_status_frame.nfc_int_scu_sts_nfc_tag_auth_status = NFC_AUTHENTICATION_FAILED;
+			// 			}
+			// 		}
+			// 		else
+			// 		{
+			// 			/*Do Nothing*/
+			// 		}
+			// 		/*Send Status Frame*/
+			// 		// ComSend_interior_nfc_int_0x200_status_frame_frame();
+			// 	}
+			// 	/*
+			// 	 * =================================================================================================
+			// 	 * Check for HCE tag
+			// 	 * =================================================================================================
+			// 	 */
 
-				if( HCE_DeviceInit(&HCEDevice, &nfcaDev[0], &IsoDevice) == HCE_ERR_NONE )
-				{
-					/* Select Android Application */
-					if( HCE_SelectAndroidApp(&HCEDevice, &HCEAndroidAppID) == HCE_ERR_NONE )
-					{
-						/* Select User File */
-						if( HCE_SelectFile(&HCEDevice, &HCEUserFileID) == HCE_ERR_NONE )
-						{
-							memset(DataBuf, 0, sizeof(DataBuf));
+			// 	if( HCE_DeviceInit(&HCEDevice, &nfcaDev[0], &IsoDevice) == HCE_ERR_NONE )
+			// 	{
+			// 		/* Select Android Application */
+			// 		if( HCE_SelectAndroidApp(&HCEDevice, &HCEAndroidAppID) == HCE_ERR_NONE )
+			// 		{
+			// 			/* Select User File */
+			// 			if( HCE_SelectFile(&HCEDevice, &HCEUserFileID) == HCE_ERR_NONE )
+			// 			{
+			// 				memset(DataBuf, 0, sizeof(DataBuf));
 
-							/* Read User File */
-							if( HCE_ReadFile(&HCEDevice, 0, sizeof(DataBuf), DataBuf, sizeof(DataBuf), (uint16_t*)&DataLen) == HCE_ERR_NONE )
-							{
-								if( (DataBuf[0] == '1') && (DataBuf[1] == 'L') )
-								{
-									/*Do Something*/			  
-								}
-								else
-								{											  
+			// 				/* Read User File */
+			// 				if( HCE_ReadFile(&HCEDevice, 0, sizeof(DataBuf), DataBuf, sizeof(DataBuf), (uint16_t*)&DataLen) == HCE_ERR_NONE )
+			// 				{
+			// 					if( (DataBuf[0] == '1') && (DataBuf[1] == 'L') )
+			// 					{
+			// 						/*Do Something*/			  
+			// 					}
+			// 					else
+			// 					{											  
 
-								}
-							}
-						}	
-					}
-				}
-			}
+			// 					}
+			// 				}
+			// 			}	
+			// 		}
+			// 	}
+			// }
 		}
 		else
 		{

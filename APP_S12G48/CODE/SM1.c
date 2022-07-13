@@ -200,21 +200,26 @@ byte SM1_Disable(void)
 */
 byte SM1_RecvChar(SM1_TComData *Chr)
 {
-  byte FlagTmp;
+  // byte FlagTmp;
 
-  if ((SerFlag & CHAR_IN_RX) == 0U) {  /* Is any char in RX buffer? */
-    return ERR_RXEMPTY;                /* If no then error */
+  // if ((SerFlag & CHAR_IN_RX) == 0U) {  /* Is any char in RX buffer? */
+  //   return ERR_RXEMPTY;                /* If no then error */
+  // }
+  // EnterCritical();                     /* Enter the critical section */
+  // *Chr = BufferRead;                   /* Read the char */
+  // FlagTmp = SerFlag;                   /* Safe the flags */
+  // SerFlag &= (byte)(~(byte)(OVERRUN_ERR | CHAR_IN_RX | FULL_RX)); /* Clear flag "char in RX buffer" */
+  // ExitCritical();                      /* Exit the critical section */
+  // if ((FlagTmp & OVERRUN_ERR) != 0U) { /* Is the overrun occured? */
+  //   return ERR_OVERRUN;                /* If yes then return error */
+  // } else {
+  //   return ERR_OK;
+  // }
+  if ((SPI0SR & SPI0SR_SPIF_MASK) == 0U) { /* Is receive buffer empty? */
+    return ERR_RXEMPTY;                /* If yes then error is returned */
   }
-  EnterCritical();                     /* Enter the critical section */
-  *Chr = BufferRead;                   /* Read the char */
-  FlagTmp = SerFlag;                   /* Safe the flags */
-  SerFlag &= (byte)(~(byte)(OVERRUN_ERR | CHAR_IN_RX | FULL_RX)); /* Clear flag "char in RX buffer" */
-  ExitCritical();                      /* Exit the critical section */
-  if ((FlagTmp & OVERRUN_ERR) != 0U) { /* Is the overrun occured? */
-    return ERR_OVERRUN;                /* If yes then return error */
-  } else {
-    return ERR_OK;
-  }
+  *Chr = SPI0DRL;                      /* Read data from receiver */
+  return ERR_OK;
 }
 
 /*
@@ -238,17 +243,15 @@ byte SM1_RecvChar(SM1_TComData *Chr)
 */
 byte SM1_SendChar(SM1_TComData Chr)
 {
-  if (SerFlag & FULL_TX) {             /* Is any char in the TX buffer? */
+  if ((SPI0SR_SPTEF == 0U) || (SerFlag & FULL_TX))  {             /* Is any char in the TX buffer? */
     return ERR_TXFULL;                 /* If yes then error */
   }
-  EnterCritical();                     /* Enter the critical section */
-  BufferWrite = Chr;                   /* Store char to the temporary variable */
-  if (EnUser) {                        /* Is the device enabled by user? */
-    (void)SPI0SR;                      /* Read the status register */
-    SPI0DRL = Chr;                     /* Store char to transmitter register */
-  }
-  SerFlag |= FULL_TX;                  /* Set the flag "full TX buffer" */
-  ExitCritical();                      /* Exit the critical section */
+  if(EnUser) {                         /* Is device enabled? */
+    SPI0DRL = Chr;                     /* If yes, send character */
+  } else {
+    BufferWrite = Chr;                 /* If no, save character */
+    SerFlag |= FULL_TX;                /* ...and set flag */
+  }                     /* Exit the critical section */
   return ERR_OK;                       /* OK */
 }
 
@@ -276,8 +279,10 @@ byte SM1_SendChar(SM1_TComData Chr)
 */
 byte SM1_CharsInRxBuf(word *Chr)
 {
-  *Chr = (word)((SerFlag & CHAR_IN_RX)?(word)1U:(word)0U); /* Return number of chars in the receive buffer */
-  return ERR_OK;                       /* OK */
+  // *Chr = (word)((SerFlag & CHAR_IN_RX)?(word)1U:(word)0U); /* Return number of chars in the receive buffer */
+  // return ERR_OK;                       /* OK */
+  *Chr = (word)(SPI0SR_SPIF);          /* Return number of chars in receive buffer */
+  return ERR_OK; 
 }
 
 /*
@@ -319,7 +324,9 @@ word SM1_GetCharsInRxBuf(void)
 */
 byte SM1_CharsInTxBuf(word *Chr)
 {
-  *Chr = ((SerFlag & FULL_TX) ? (word)1U : (word)0U); /* Return number of chars in the transmit buffer */
+  // *Chr = ((SerFlag & FULL_TX) ? (word)1U : (word)0U); /* Return number of chars in the transmit buffer */
+  // return ERR_OK;                       /* OK */
+  *Chr = ((EnUser) ? (SPI0SR_SPTEF ? (word)0U : (word)1U) : ((SerFlag & FULL_TX) ? (word)1U : (word)0U)); /* Return number of chars in the transmit buffer */
   return ERR_OK;                       /* OK */
 }
 
@@ -336,41 +343,11 @@ byte SM1_CharsInTxBuf(word *Chr)
 */
 word SM1_GetCharsInTxBuf(void)
 {
-  return ((SerFlag & FULL_TX) ? (word)1U : (word)0U); /* Return number of chars in the transmit buffer */
-}
-/*
-** ===================================================================
-**     Method      :  SM1_Interrupt (component SynchroMaster)
-**
-**     Description :
-**         The method services the interrupt of the selected peripheral(s)
-**         and eventually invokes event(s) of the component.
-**         This method is internal. It is used by Processor Expert only.
-** ===================================================================
-*/
-#define ON_ERROR       0x01U
-#define ON_FULL_RX     0x02U
-#define ON_RX_CHAR     0x04U
-#define ON_FREE_TX     0x08U
-#define ON_TX_CHAR     0x10U
-#define ON_RX_CHAR_EXT 0x20U
-#pragma CODE_SEG __NEAR_SEG NON_BANKED
-ISR(SM1_Interrupt)
-{
-  SM1_TComData Data = 0U;              /* Temporary variable for data */
-  byte Status;                         /* Temporary variable for flags */
-
-  Status = SPI0SR;                     /* Read the device error register */
-  Data = SPI0DRL;                      /* Read data from receiver */
-  if (SerFlag & CHAR_IN_RX) {          /* Is the overrun error flag set? */
-    SerFlag |= OVERRUN_ERR;            /* If yes then set the OnError flag */
-  }
-  SerFlag |= CHAR_IN_RX;               /* Set flag "char in RX buffer" */
-  BufferRead = Data;                   /* Read data from receiver */
-  SerFlag &= (byte)(~(byte)FULL_TX);   /* Reset flag "full TX buffer" */
+  // return ((SerFlag & FULL_TX) ? (word)1U : (word)0U); /* Return number of chars in the transmit buffer */
+   return ((EnUser) ? (SPI0SR_SPTEF ? (word)0U : (word)1U) : ((SerFlag & FULL_TX) ? (word)1U : (word)0U)); /* Return number of chars in the transmit buffer */
 }
 
-#pragma CODE_SEG SM1_CODE
+
 /*
 ** ===================================================================
 **     Method      :  SM1_Init (component SynchroMaster)
@@ -389,11 +366,11 @@ void SM1_Init(void)
   (void)SPI0SR;                        /* Read the status register */
   (void)SPI0DRL;                       /* Read the device register */
   /* SPI0BR: ??=0,SPPR2=0,SPPR1=0,SPPR0=0,??=0,SPR2=0,SPR1=1,SPR0=0 */
-  SPI0BR = 0x02U;                      /* Set the baud rate register */
+  SPI0BR = 0x02U;                    /* Set the baud rate register */
   /* SPI0CR2: ??=0,XFRW=0,??=0,MODFEN=0,BIDIROE=0,??=0,SPISWAI=0,SPC0=0 */
   SPI0CR2 = 0x00U;                     /* Set control register 2 */
   /* SPI0CR1: SPIE=1,SPE=1,SPTIE=0,MSTR=1,CPOL=0,CPHA=1,SSOE=0,LSBFE=1 */
-  SPI0CR1 = 0xD5U;                     /* Set control register 1 */
+  SPI0CR1 = 0x54U; //0xD5  54                  /* Set control register 1 */
   SerFlag = 0U;                        /* Reset all flags */
   EnUser = TRUE;                       /* Enable device */
 }

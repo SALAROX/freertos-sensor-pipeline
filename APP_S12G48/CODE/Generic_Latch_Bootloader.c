@@ -41,6 +41,7 @@
 #include "UDS_Comms.h"
 #include "PFlash.h"
 #include "nfc_main.h"
+#include "platform.h"
 
 /******************************************************************************
  *                              Macros                                        *
@@ -137,7 +138,7 @@ void main(void)
 
   SYS_SelectScheduler((uint8_t)SYS_defaultSched);
   SYS_sleepStatus = SYS_running;
-  __EI(); /* Enable interrupts */
+  // __EI(); /* Enable interrupts */
 
   /* initialization of Bootloader Variables */
   failure_PDU_SID = 0;
@@ -184,6 +185,9 @@ void main(void)
 
       SYS_schedClock1ms++;
       sysTickTimer++;
+
+      /* Main NFC Task Handler */
+		NFC_Task();
     }
     else
     {
@@ -284,6 +288,8 @@ __interrupt void ivVrti(void)
   {
     can_counter++;
   }
+
+  tickInc();
 }
 #pragma CODE_SEG DEFAULT
 #endif

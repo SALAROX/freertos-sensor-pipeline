@@ -184,8 +184,8 @@ typedef struct
 	MFDF_Access_t			ReadWriteAccess;
 	MFDF_Access_t			ChangeAccess;
 	
-	union
-	{
+	// union
+	// {
 		/* FileType: Standard */
 		struct
 		{
@@ -208,7 +208,7 @@ typedef struct
 			uint32_t	MaxRecordNumber;
 			uint32_t	CurrentRecordNumber;
 		}RecordFile;
-	};
+	// };
 	
 }MFDF_FileSetting_t;
 
@@ -216,8 +216,8 @@ typedef struct
 typedef struct
 {
 	/* Hardware information */
-	union
-	{
+	// union
+	// {
 		struct
 		{
 			uint8_t VendorID;
@@ -229,11 +229,11 @@ typedef struct
 			uint8_t ProtocolCode;
 		}HW_Info;
 		uint8_t FrameOne[7];
-	};
+	// };
 	
 	/* Software information */
-	union
-	{
+	// union
+	// {
 		struct
 		{
 			uint8_t VendorID;
@@ -245,11 +245,11 @@ typedef struct
 			uint8_t ProtocolCode;
 		}SW_Info;
 		uint8_t FrameTwo[7];
-	};
+	// };
 	
 	/* Production information */
-	union
-	{
+	// union
+	// {
 		struct
 		{
 			uint8_t SerialNumber[MFDF_SN_LEN];
@@ -258,7 +258,7 @@ typedef struct
 			uint8_t ProductionYear;			
 		}Product_Info;		
 		uint8_t FrameThree[14];
-	};
+	// };
 	
 }MFDF_DevInfo_t;
 

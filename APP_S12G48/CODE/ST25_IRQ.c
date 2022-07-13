@@ -55,6 +55,7 @@
 /* MODULE ST25_IRQ. */
 
 #include "ST25_IRQ.h"
+#include "st25r3911_interrupt.h"
 /*Including shared modules, which are used for all project*/
 #include "PE_Types.h"
 #include "PE_Error.h"
@@ -116,7 +117,7 @@ void ST25_IRQ_Disable(void)
 ISR(ST25_IRQ_Interrupt)
 {
   PIF01AD = 0x40U;                      /* Clear flag */
-  ST25_IRQ_Interrupt();
+  st25r3911Isr();
 }
 
 #pragma CODE_SEG ST25_IRQ_CODE

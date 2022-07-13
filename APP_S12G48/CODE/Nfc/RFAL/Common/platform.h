@@ -114,9 +114,9 @@
 #define RFAL_FEATURE_ISO_DEP_IBLOCK_MAX_LEN    128      /*!< ISO-DEP I-Block max length. Please use values as defined by rfalIsoDepFSx */ /*Default: 256*/
 #define RFAL_FEATURE_ISO_DEP_APDU_MAX_LEN      256     /*!< ISO-DEP APDU max length. Please use multiples of I-Block max length       */ /* Default 1024 */
 
-#define platformLog(...)                             		//logPrint(__VA_ARGS__)                          /*!< Log  method          */
+// #define platformLog(...)                             		//logPrint(__VA_ARGS__)                          /*!< Log  method          */
 
-#define platformLogHEX(buf, len, colSize, head)				//LogPrintHex(buf, len, colSize, head)
+// #define platformLogHEX(buf, len, colSize, head)				//LogPrintHex(buf, len, colSize, head)
 
 
 uint32_t platformGetSysTick();

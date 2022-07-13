@@ -37,7 +37,7 @@
 #pragma CODE_SEG DEFAULT
 
 
-void ST25_IRQ_Interrupt(void);
+void ST25_IRQ_OnInterrupt(void);
 /*
 ** ===================================================================
 **     Event       :  ST25_IRQ_Interrupt (module Events)

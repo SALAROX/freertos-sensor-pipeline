@@ -79,7 +79,7 @@ static const tIsrFunc _InterruptVectorTable[] @0xFF80U = { /* Interrupt vector t
   &ADC_Interrupt,                       /* 0x69  0xFFD2   ivVatd        used by PE */
   &Cpu_Interrupt,                       /* 0x6A  0xFFD4   ivVsci1       unused by PE */
   &Cpu_Interrupt,                       /* 0x6B  0xFFD6   ivVsci0       unused by PE */
-  &SM1_Interrupt,                       /* 0x6C  0xFFD8   ivVspi0       used by PE */
+  &ST25_IRQ_Interrupt,   //SM1_Interrupt   /* 0x6C  0xFFD8   ivVspi0       used by PE */
   &Cpu_Interrupt,                       /* 0x6D  0xFFDA   ivVReserved18 unused by PE */
   &Cpu_Interrupt,                       /* 0x6E  0xFFDC   ivVReserved17 unused by PE */
   &Cpu_Interrupt,                       /* 0x6F  0xFFDE   ivVtimovf     unused by PE */

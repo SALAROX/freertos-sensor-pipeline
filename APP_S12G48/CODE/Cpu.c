@@ -235,11 +235,7 @@ void PE_low_level_init(void)
   /* PERP: PERP1=0 */
   clrReg8Bits(PERP, 0x02U);             
   /* DDRP: DDRP1=1 */
-  setReg8Bits(DDRP, 0x02U);             
-  /* PER1AD: PER1AD6=0 */
-  clrReg8Bits(PER1AD, 0x40U);           
-  /* DDR1AD: DDR1AD6=0 */
-  clrReg8Bits(DDR1AD, 0x40U);           
+  setReg8Bits(DDRP, 0x02U);                                
   /* ACMPC: ACDIEN=1 */
   setReg8Bits(ACMPC, 0x10U);            
   /* CPMUINT: LOCKIE=0,OSCIE=0 */
@@ -251,7 +247,13 @@ void PE_low_level_init(void)
   /* ATDDIEN: IEN6=1,IEN0=0 */
   clrSetReg16Bits(ATDDIEN, 0x01U, 0x40U); 
   /* PPS01AD: PPS1AD6=1 */
-  setReg16Bits(PPS01AD, 0x40U);         
+  // setReg16Bits(PPS01AD, 0x40U);  CC  
+  /* DDR1AD: DDR1AD6=0 */
+  clrReg8Bits(DDR01AD, 0x40U);
+  /* PER1AD: PER1AD6=1 */
+  setReg8Bits(PER01AD, 0x40U); //clrReg8Bits(PER1AD, 0x40U);  
+  /* PPS1AD: PPS1AD6=1 */
+  setReg8Bits(PPS1AD, 0x40U);      
   /* ### MC9S12G64_32 "Cpu" init code ... */
   /* ### Init_MSCAN "CAN1" init code ... */
   CAN1_Init();

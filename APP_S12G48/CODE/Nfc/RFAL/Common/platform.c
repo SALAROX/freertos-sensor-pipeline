@@ -11,8 +11,8 @@
 ******************************************************************************
 */
 #include "platform.h"
-#include <PE_Types.h>
-#include <PE_Error.h>
+#include "PE_Types.h"
+#include "PE_Error.h"
 #include <stddef.h>
 
 /*

@@ -27,7 +27,8 @@ END
 
 SEGMENTS  /* Here all RAM/ROM areas of the device are listed. Used in PLACEMENT below. */
       RAM           = READ_WRITE    0x3000 TO   0x3FFF;
-      ROM_C000      = READ_ONLY     0xC000 TO   0xFEFF;
+      //ROM_C000      = READ_ONLY     0xC000 TO   0xFEFF;
+      ROM_4000      = READ_ONLY     0x4000 TO   0xBFFF;
 END
 
 PLACEMENT /* here all predefined and user segments are placed into the SEGMENTS defined above. */
@@ -37,7 +38,7 @@ PLACEMENT /* here all predefined and user segments are placed into the SEGMENTS 
       STRINGS,                /* string literals */
       NON_BANKED,             /* runtime routines which must not be banked */
       DEFAULT_ROM,
-      COPY              INTO  ROM_C000;
+      COPY              INTO  ROM_4000;//ROM_C000;
 
       DEFAULT_RAM             /* all variables, the default RAM location */
                         INTO  RAM;

@@ -19,6 +19,7 @@
 
 #include "Cpu.h"
 #include "Events.h"
+#include "st25r3911_interrupt.h"
 
 /* User includes (#include below this line is not maintained by Processor Expert) */
 
@@ -36,9 +37,10 @@
 **     Returns     : Nothing
 ** ===================================================================
 */
-void ST25_IRQ_Interrupt(void)
+void ST25_IRQ_OnInterrupt(void)
 {
   /* place your ST25_IRQ interrupt procedure body here */
+  st25r3911Isr();
 }
 
 

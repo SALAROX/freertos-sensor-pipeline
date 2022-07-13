@@ -62,7 +62,7 @@
 #include "platform.h"
 #include "st_errno.h"
 #include "rfal_rf.h"
-#include <PE_Types.h>
+#include "PE_Types.h"
 
 
 /*****************************************************************************

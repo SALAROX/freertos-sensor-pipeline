@@ -44,7 +44,7 @@
  */
 #include "rfal_analogConfig.h"
 #include "st25r3911_com.h"
-#include <PE_Types.h>
+#include "PE_Types.h"
 
 /*
  ******************************************************************************

@@ -77,19 +77,19 @@ static uint8_t comBuf[ST25R3911_BUF_LEN];    /*!< ST25R3911 communication buffer
 ******************************************************************************
 */
 
-static inline void st25r3911CheckFieldSetLED(uint8_t value)
-{
-    if ((ST25R3911_REG_OP_CONTROL_tx_en & value) != 0U)
-    {
-#ifdef PLATFORM_LED_FIELD_PIN
-        platformLedOn( PLATFORM_LED_FIELD_PORT, PLATFORM_LED_FIELD_PIN );
-    }
-    else
-    {
-        platformLedOff( PLATFORM_LED_FIELD_PORT, PLATFORM_LED_FIELD_PIN );
-#endif /* PLATFORM_LED_FIELD_PIN */
-    }
-}
+// static inline void st25r3911CheckFieldSetLED(uint8_t value)
+// {
+//     if ((ST25R3911_REG_OP_CONTROL_tx_en & value) != 0U)
+//     {
+// #ifdef PLATFORM_LED_FIELD_PIN
+//         platformLedOn( PLATFORM_LED_FIELD_PORT, PLATFORM_LED_FIELD_PIN );
+//     }
+//     else
+//     {
+//         platformLedOff( PLATFORM_LED_FIELD_PORT, PLATFORM_LED_FIELD_PIN );
+// #endif /* PLATFORM_LED_FIELD_PIN */
+//     }
+// }
 
 
 /*
@@ -221,7 +221,7 @@ void st25r3911WriteRegister(uint8_t reg, uint8_t value)
   
     if (ST25R3911_REG_OP_CONTROL == reg)
     {
-        st25r3911CheckFieldSetLED(value);
+        // st25r3911CheckFieldSetLED(value);
     }    
     
     platformProtectST25R391xComm();
@@ -307,7 +307,7 @@ void st25r3911WriteMultipleRegisters(uint8_t reg, const uint8_t* values, uint8_t
 
     if ((reg <= ST25R3911_REG_OP_CONTROL) && ((reg+length) >= ST25R3911_REG_OP_CONTROL))
     {
-        st25r3911CheckFieldSetLED(values[ST25R3911_REG_OP_CONTROL-reg]);
+        // st25r3911CheckFieldSetLED(values[ST25R3911_REG_OP_CONTROL-reg]);
     }
     
     if (length > 0U)

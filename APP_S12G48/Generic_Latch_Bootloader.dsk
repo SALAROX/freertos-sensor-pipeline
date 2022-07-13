@@ -63,7 +63,7 @@ Rect=[741|90|781|786]
 ViewMode=PrphRegInit
 SortRegsByAddr=Yes
 GroupRegisters=No
-Peripheral=ADL
+Peripheral=SPI0
 
 [Editor]
 Rect=[0|0|0|0]
