@@ -19,23 +19,8 @@ Module "GPIO_Port_S" (component Init_GPIO_HCS12)
                 settings. Call this method in the user code to initialize the module. By default, the method is called by PE 
                 automatically; see "Call Init method" property of the component for more details.
 
-Module "GPIO_Port_AD" (component Init_GPIO_HCS12)
-   - GPIO_Port_AD_Init -This method initializes registers of the GPIO module according to this Peripheral Initialization 
-                settings. Call this method in the user code to initialize the module. By default, the method is called by PE 
-                automatically; see "Call Init method" property of the component for more details.
-
-Module "ADC_Port_AD" (component Init_ADC_HCS12)
-   - ADC_Port_AD_Init -This method initializes registers of the ADC module according to this Peripheral Initialization settings.
-                Call this method in user code to initialize the module. By default, the method is called by PE automatically; 
-                see "Call Init method" property of the component for more details.
-
 Module "GPIO_Port_T" (component Init_GPIO_HCS12)
    - GPIO_Port_T_Init -This method initializes registers of the GPIO module according to this Peripheral Initialization 
-                settings. Call this method in the user code to initialize the module. By default, the method is called by PE 
-                automatically; see "Call Init method" property of the component for more details.
-
-Module "GPIO_Port_P" (component Init_GPIO_HCS12)
-   - GPIO_Port_P_Init -This method initializes registers of the GPIO module according to this Peripheral Initialization 
                 settings. Call this method in the user code to initialize the module. By default, the method is called by PE 
                 automatically; see "Call Init method" property of the component for more details.
 
@@ -113,6 +98,34 @@ Module "SM1"       (component SynchroMaster)
    - SM1_GetCharsInTxBuf -Returns the number of characters in the output buffer. [ Version specific information for Freescale 
                 56800 derivatives ]   DMA mode:  If DMA controller is available on the selected CPU and the transmitter is 
                 configured to use DMA controller then this method returns the number of characters in the transmit buffer.
+
+Module "SPI_SS"    (component BitIO)
+   - SPI_SS_GetVal -Returns the input/output value. If the direction is [input] then the input value of the pin is read and 
+                returned. If the direction is [output] then the last written value is returned (see <Safe mode> property for 
+                limitations). This method cannot be disabled if direction is [input].
+   - SPI_SS_PutVal -The specified output value is set. If the direction is [input], the component saves the value to a memory 
+                or a register and this value will be written to the pin after switching to the output mode (using 
+                [SetDir(TRUE)]; see <Safe mode> property for limitations). If the direction is [output], it writes the value to 
+                the pin. (Method is available only if the direction = _[output]_ or _[input/output]_).
+   - SPI_SS_ClrVal -Clears (set to zero) the output value. It is equivalent to the [PutVal(FALSE)]. This method is available 
+                only if the direction = _[output]_ or _[input/output]_.
+   - SPI_SS_SetVal -Sets (to one) the output value. It is equivalent to the [PutVal(TRUE)]. This method is available only if 
+                the direction = _[output]_ or _[input/output]_.
+
+Module "ADC"       (component ADC)
+   - ADC_Measure -This method performs one measurement on all channels that are set in the component inspector. (Note: If the 
+                <number of conversions> is more than one the conversion of A/D channels is performed specified number of times.)
+   - ADC_GetValue16 -This method returns the last measured values of all channels justified to the left. Compared with 
+                <GetValue> method this method returns more accurate result if the <number of conversions> is greater than 1 and 
+                <AD resolution> is less than 16 bits. In addition, the user code dependency on <AD resolution> is eliminated.
+
+Module "ST25_IRQ"  (component ExtInt)
+   - ST25_IRQ_Enable -Enable the component - the external events are accepted. This method is available only if HW module 
+                allows enable/disable of the interrupt.
+   - ST25_IRQ_Disable -Disable the component - the external events are not accepted. This method is available only if HW module 
+                allows enable/disable of the interrupt.
+   - ST25_IRQ_GetVal -Returns the actual value of the input pin of the component.
+   - ST25_IRQ_SetEdge -Sets the edge type for this component that generates the interrupt.
 
 Module "Cpu"       (component MC9S12G64_32)
    - Cpu_EnableInt -Enable maskable interrupts

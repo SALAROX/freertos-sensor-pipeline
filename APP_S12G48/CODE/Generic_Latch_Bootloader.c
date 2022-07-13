@@ -21,13 +21,13 @@
 #include "CAN1.h"
 #include "TIM1.h"
 #include "GPIO_Port_S.h"
-#include "GPIO_Port_AD.h"
-#include "ADC_Port_AD.h"
 #include "GPIO_Port_T.h"
-#include "GPIO_Port_P.h"
 #include "RTI1.h"
 #include "IEE1.h"
 #include "SM1.h"
+#include "SPI_SS.h"
+#include "ADC.h"
+#include "ST25_IRQ.h"
 /* Include shared modules, which are used for whole project */
 #include "PE_Types.h"
 #include "PE_Error.h"
@@ -40,6 +40,7 @@
 #include "CAN_drv.h"
 #include "UDS_Comms.h"
 #include "PFlash.h"
+#include "nfc_main.h"
 
 /******************************************************************************
  *                              Macros                                        *
@@ -125,6 +126,9 @@ void main(void)
 
   /* Write your code here */
   // PTT_PTT3 ^= 1;
+
+  /* Init NFC TRCV*/
+	(void)NFC_init();
 
   /*CAN TRCV Normal Mode*/
   CAN_STB_MODE(NORMAL);

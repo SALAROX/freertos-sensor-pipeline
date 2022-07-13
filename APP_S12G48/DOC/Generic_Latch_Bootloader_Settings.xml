@@ -379,7 +379,7 @@ asm(BGND);
   </Bean>
 
   <Bean name="GPIO_Port_AD" type="Init_GPIO">
-    <Enabled v="Y"/>
+    <Enabled v="N"/>
 
     <Properties>
       <Component_name v="GPIO_Port_AD"/>
@@ -430,7 +430,7 @@ asm(BGND);
           <Pin_6_Interrupt v="Enabled"/>
           <Pin_7_Interrupt v="Disabled"/>
           <Interrupt_Priority v="1"/>
-          <ISR_name v="ST25_IRQ_OnInterrupt"/>
+          <ISR_name v="ST25_IRQ_Interrupt"/>
         </group>
       </group>
       <group name="Initialization">
@@ -447,7 +447,7 @@ asm(BGND);
   </Bean>
 
   <Bean name="ADC_Port_AD" type="Init_ADC">
-    <Enabled v="Y"/>
+    <Enabled v="N"/>
 
     <Properties>
       <Component_name v="ADC_Port_AD"/>
@@ -573,7 +573,7 @@ asm(BGND);
   </Bean>
 
   <Bean name="GPIO_Port_P" type="Init_GPIO">
-    <Enabled v="Y"/>
+    <Enabled v="N"/>
 
     <Properties>
       <Component_name v="GPIO_Port_P"/>
@@ -583,14 +583,7 @@ asm(BGND);
       </group>
       <boolgroup name="Pins" v="Enabled">
         <boolgroup name="Pin0" v="Disabled" />
-        <boolgroup name="Pin1" v="Enabled">
-          <Pin v="PP1_KWP1_ETRIG1_ECLKX2_PWM1"/>
-          <Pin_signal v="SPI_SS"/>
-          <Direction v="Output"/>
-          <Output_value v="1"/>
-          <Pull_resistor v="no pull resistor"/>
-          <Open_drain v="push-pull"/>
-        </boolgroup>
+        <boolgroup name="Pin1" v="Disabled" />
         <boolgroup name="Pin2" v="Disabled" />
         <boolgroup name="Pin3" v="Disabled" />
         <boolgroup name="Pin4" v="Disabled" />
@@ -939,6 +932,147 @@ asm(BGND);
       <event name="OnFreeTxBuf" v="don&apos;t generate code" />
       <event name="OnError" v="don&apos;t generate code" />
       <event name="OnFault" v="don&apos;t generate code" />
+    </Events>
+  </Bean>
+
+  <Bean name="SPI_SS" type="BitIO">
+    <Enabled v="Y"/>
+
+    <Properties>
+      <Component_name v="SPI_SS"/>
+      <Pin_for_I_O v="PP1_KWP1_ETRIG1_ECLKX2_PWM1"/>
+      <Pin_signal v=""/>
+      <Pull_resistor sel_value="no pull resistor" v="autoselected pull"/>
+      <Open_drain v="push-pull"/>
+      <Direction v="Output"/>
+      <group name="Initialization">
+        <Init__direction v="Output"/>
+        <Init__value v="1"/>
+      </group>
+      <Safe_mode v="yes"/>
+      <Optimization_for v="speed"/>
+    </Properties>
+
+    <Methods>
+      <GetDir v="don&apos;t generate code"/>
+      <SetDir v="don&apos;t generate code"/>
+      <SetInput v="don&apos;t generate code"/>
+      <SetOutput v="don&apos;t generate code"/>
+      <GetVal v="generate code"/>
+      <PutVal v="generate code"/>
+      <ClrVal v="generate code"/>
+      <SetVal v="generate code"/>
+      <NegVal v="don&apos;t generate code"/>
+      <GetRawVal v="don&apos;t generate code"/>
+    </Methods>
+
+    <Events>
+    </Events>
+  </Bean>
+
+  <Bean name="ADC" type="ADC">
+    <Enabled v="Y"/>
+
+    <Properties>
+      <Component_name v="ADC"/>
+      <A_D_converter v="ADC"/>
+      <Sharing v="Disabled"/>
+      <boolgroup name="Interrupt service/event" v="Enabled">
+        <A_D_interrupt v="Vatd"/>
+        <A_D_interrupt_priority v="medium priority"/>
+      </boolgroup>
+      <list name="A/D channels" v="1">
+        <group name="Channel0">
+          <A_D_channel__pin_ v="PAD0_KWAD0_AN0"/>
+          <A_D_channel__pin__signal v=""/>
+        </group>
+      </list>
+      <A_D_resolution sel_value="10 bits" v="Autoselect"/>
+      <Conversion_time v="30 &#181;s"/>
+      <Sample_time v="24 clock periods"/>
+      <Discharge_before_sampling v="Disabled"/>
+      <Result_mode v="Right justified"/>
+      <Autoscan_mode v="Disabled"/>
+      <boolgroup name="External trigger" v="Disabled" />
+      <boolgroup name="Internal trigger" v="Disabled" />
+      <Number_of_conversions v="1"/>
+      <group name="Initialization">
+        <Enabled_in_init__code v="yes"/>
+        <Events_enabled_in_init_ v="yes"/>
+      </group>
+      <group name="CPU clock/speed selection">
+        <High_speed_mode v="This component enabled"/>
+        <Low_speed_mode v="This component disabled"/>
+        <Slow_speed_mode v="This component disabled"/>
+      </group>
+    </Properties>
+
+    <Methods>
+      <Enable v="don&apos;t generate code"/>
+      <Disable v="don&apos;t generate code"/>
+      <EnableEvent v="don&apos;t generate code"/>
+      <DisableEvent v="don&apos;t generate code"/>
+      <Start v="don&apos;t generate code"/>
+      <Stop v="don&apos;t generate code"/>
+      <Measure v="generate code"/>
+      <MeasureWait v="don&apos;t generate code"/>
+      <MeasureNotWait v="don&apos;t generate code"/>
+      <MeasureChan v="don&apos;t generate code"/>
+      <MeasureChanWait v="don&apos;t generate code"/>
+      <MeasureChanNotWait v="don&apos;t generate code"/>
+      <EnableExtTrigger v="don&apos;t generate code"/>
+      <EnableExtChanTrigger v="don&apos;t generate code"/>
+      <EnableIntTrigger v="don&apos;t generate code"/>
+      <EnableIntChanTrigger v="don&apos;t generate code"/>
+      <GetValue v="don&apos;t generate code"/>
+      <GetChanValue v="don&apos;t generate code"/>
+      <GetValue8 v="don&apos;t generate code"/>
+      <GetChanValue8 v="don&apos;t generate code"/>
+      <GetValue16 v="generate code"/>
+      <GetChanValue16 v="don&apos;t generate code"/>
+    </Methods>
+
+    <Events>
+      <Event_module_name v="Events"/>
+      <event name="BeforeNewSpeed" v="don&apos;t generate code" />
+      <event name="AfterNewSpeed" v="don&apos;t generate code" />
+      <event name="OnEnd" v="generate code">
+        <Event_procedure_name v="ADC_OnEnd"/>
+        <Priority v="same as interrupt"/>
+      </event>
+      <event name="OnTrgOverrun" v="don&apos;t generate code" />
+    </Events>
+  </Bean>
+
+  <Bean name="ST25_IRQ" type="ExtInt">
+    <Enabled v="Y"/>
+
+    <Properties>
+      <Component_name v="ST25_IRQ"/>
+      <Pin v="PAD6_KWAD6_AN6_ACMPP"/>
+      <Pin_signal v="ST25_INT_REQ"/>
+      <Pull_resistor sel_value="no pull resistor" v="autoselected pull"/>
+      <Generate_interrupt_on sel_value="rising edge" v="rising or falling edge"/>
+      <Interrupt v="Vportad"/>
+      <Interrupt_priority v="medium priority"/>
+      <group name="Initialization">
+        <Enabled_in_init__code v="yes"/>
+      </group>
+    </Properties>
+
+    <Methods>
+      <Enable v="generate code"/>
+      <Disable v="generate code"/>
+      <GetVal v="generate code"/>
+      <SetEdge v="generate code"/>
+    </Methods>
+
+    <Events>
+      <Event_module_name v="Events"/>
+      <event name="OnInterrupt" v="generate code">
+        <Event_procedure_name v="ST25_IRQ_Interrupt"/>
+        <Priority v="same as interrupt"/>
+      </event>
     </Events>
   </Bean>
 

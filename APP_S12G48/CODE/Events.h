@@ -26,16 +26,45 @@
 #include "CAN1.h"
 #include "TIM1.h"
 #include "GPIO_Port_S.h"
-#include "GPIO_Port_AD.h"
-#include "ADC_Port_AD.h"
 #include "GPIO_Port_T.h"
-#include "GPIO_Port_P.h"
 #include "RTI1.h"
 #include "IEE1.h"
 #include "SM1.h"
+#include "SPI_SS.h"
+#include "ADC.h"
+#include "ST25_IRQ.h"
 
 #pragma CODE_SEG DEFAULT
 
+
+void ST25_IRQ_Interrupt(void);
+/*
+** ===================================================================
+**     Event       :  ST25_IRQ_Interrupt (module Events)
+**
+**     Component   :  ST25_IRQ [ExtInt]
+**     Description :
+**         This event is called when an active signal edge/level has
+**         occurred.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void ADC_OnEnd(void);
+/*
+** ===================================================================
+**     Event       :  ADC_OnEnd (module Events)
+**
+**     Component   :  ADC [ADC]
+**     Description :
+**         This event is called after the measurement (which consists
+**         of <1 or more conversions>) is/are finished.
+**         The event is available only when the <Interrupt
+**         service/event> property is enabled.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
 
 /* END Events */
 #endif /* __Events_H*/

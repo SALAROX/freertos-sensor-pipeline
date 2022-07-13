@@ -24,6 +24,43 @@
 
 #pragma CODE_SEG DEFAULT
 
+/*
+** ===================================================================
+**     Event       :  ST25_IRQ_Interrupt (module Events)
+**
+**     Component   :  ST25_IRQ [ExtInt]
+**     Description :
+**         This event is called when an active signal edge/level has
+**         occurred.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void ST25_IRQ_Interrupt(void)
+{
+  /* place your ST25_IRQ interrupt procedure body here */
+}
+
+
+/*
+** ===================================================================
+**     Event       :  ADC_OnEnd (module Events)
+**
+**     Component   :  ADC [ADC]
+**     Description :
+**         This event is called after the measurement (which consists
+**         of <1 or more conversions>) is/are finished.
+**         The event is available only when the <Interrupt
+**         service/event> property is enabled.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void ADC_OnEnd(void)
+{
+  /* Write your code here ... */
+}
+
 /* END Events */
 
 /*

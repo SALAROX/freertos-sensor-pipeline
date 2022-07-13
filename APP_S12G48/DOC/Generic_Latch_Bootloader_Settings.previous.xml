@@ -573,17 +573,24 @@ asm(BGND);
   </Bean>
 
   <Bean name="GPIO_Port_P" type="Init_GPIO">
-    <Enabled v="N"/>
+    <Enabled v="Y"/>
 
     <Properties>
       <Component_name v="GPIO_Port_P"/>
-      <Device v=""/>
+      <Device v="P"/>
       <group name="Settings">
         <boolgroup name="Port control" v="Individual pins" />
       </group>
       <boolgroup name="Pins" v="Enabled">
         <boolgroup name="Pin0" v="Disabled" />
-        <boolgroup name="Pin1" v="Disabled" />
+        <boolgroup name="Pin1" v="Enabled">
+          <Pin v="PP1_KWP1_ETRIG1_ECLKX2_PWM1"/>
+          <Pin_signal v="SPI_SS"/>
+          <Direction v="Output"/>
+          <Output_value v="1"/>
+          <Pull_resistor v="no pull resistor"/>
+          <Open_drain v="push-pull"/>
+        </boolgroup>
         <boolgroup name="Pin2" v="Disabled" />
         <boolgroup name="Pin3" v="Disabled" />
         <boolgroup name="Pin4" v="Disabled" />
@@ -591,6 +598,21 @@ asm(BGND);
         <boolgroup name="Pin6" v="Disabled" />
         <boolgroup name="Pin7" v="Disabled" />
       </boolgroup>
+      <group name="Interrupts">
+        <group name="Keypad Wakeup Interrupt">
+          <Interrupt v="Vportp"/>
+          <Pin_0_Interrupt v="Disabled"/>
+          <Pin_1_Interrupt v="Disabled"/>
+          <Pin_2_Interrupt v="Disabled"/>
+          <Pin_3_Interrupt v="Disabled"/>
+          <Pin_4_Interrupt v="Disabled"/>
+          <Pin_5_Interrupt v="Disabled"/>
+          <Pin_6_Interrupt v="Disabled"/>
+          <Pin_7_Interrupt v="Disabled"/>
+          <Interrupt_Priority v="1"/>
+          <ISR_name v=""/>
+        </group>
+      </group>
       <group name="Initialization">
         <Call_Init_Method v="yes"/>
       </group>
