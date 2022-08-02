@@ -5,7 +5,7 @@
 **     Project   : Generic_Latch_Bootloader
 **     Processor : MC9S12G48VLC
 **     Compiler  : CodeWarrior HC12 C Compiler
-**     Date/Time : 12/07/2022, 20:44
+**     Date/Time : 13/07/2022, 16:55
 **     Abstract  :
 **        This file is used by the linker. It describes files to be linked,
 **        memory ranges, stack size, etc. For detailed description of the PRM file
@@ -28,7 +28,7 @@ END
 SEGMENTS  /* Here all RAM/ROM areas of the device are listed. Used in PLACEMENT below. */
       RAM           = READ_WRITE    0x3000 TO   0x3FFF;
       //ROM_C000      = READ_ONLY     0xC000 TO   0xFEFF;
-      ROM_4000      = READ_ONLY     0x4000 TO   0xBFFF;
+      ROM_4000      = READ_ONLY     0x4000 TO   0xFEFF;
 END
 
 PLACEMENT /* here all predefined and user segments are placed into the SEGMENTS defined above. */

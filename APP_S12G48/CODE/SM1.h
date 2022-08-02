@@ -6,7 +6,7 @@
 **     Component : SynchroMaster
 **     Version   : Component 02.341, Driver 01.20, CPU db: 3.00.020
 **     Compiler  : CodeWarrior HC12 C Compiler
-**     Date/Time : 12/07/2022, 20:44
+**     Date/Time : 13/07/2022, 16:55
 **     Abstract  :
 **         This component "SynchroMaster" implements MASTER part of synchronous
 **         serial master-slave communication.
@@ -29,12 +29,8 @@
 **             Mode register           : SPI0CR2   [$00D9]
 **             Baud setting reg.       : SPI0BR    [$00DA]
 **
-**         Input interrupt
-**             Vector name             : Vspi0
 **             Priority                : 
 **
-**         Output interrupt
-**             Vector name             : Vspi0
 **             Priority                : 
 **
 **         Used pins                   :
@@ -224,7 +220,7 @@ byte SM1_CharsInRxBuf(word *Chr);
 ** ===================================================================
 */
 
-word SM1_GetCharsInRxBuf(void);
+#define SM1_GetCharsInRxBuf() ((word)(SPI0SR_SPIF)) /* Return number of chars in the receive buffer */
 /*
 ** ===================================================================
 **     Method      :  SM1_GetCharsInRxBuf (component SynchroMaster)
@@ -271,20 +267,6 @@ word SM1_GetCharsInTxBuf(void);
 **     Parameters  : None
 **     Returns     :
 **         ---             - Number of characters in the output buffer.
-** ===================================================================
-*/
-
-#pragma CODE_SEG __NEAR_SEG NON_BANKED
-__interrupt void SM1_Interrupt(void);
-#pragma CODE_SEG SM1_CODE
-/*
-** ===================================================================
-**     Method      :  SM1_Interrupt (component SynchroMaster)
-**
-**     Description :
-**         The method services the interrupt of the selected peripheral(s)
-**         and eventually invokes event(s) of the component.
-**         This method is internal. It is used by Processor Expert only.
 ** ===================================================================
 */
 

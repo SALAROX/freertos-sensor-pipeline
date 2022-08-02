@@ -346,7 +346,7 @@ uint32_t st25r3911GetNoResponseTime_64fcs(void)
 
 void st25r3911StartGPTimer_8fcs(uint16_t gpt_8fcs, uint8_t trigger_source)
 {
-    st25r3911SetGPTime_8fcs(gpt_8fcs);
+    st25r3911SetGPTime_8fcs(gpt_8fcs);PT1AD_PT1AD2 ^= 1;PT1AD_PT1AD2 ^= 1;PT1AD_PT1AD2 ^= 1;
 
     st25r3911ModifyRegister(ST25R3911_REG_GPT_CONTROL, 
             ST25R3911_REG_GPT_CONTROL_gptc_mask, 

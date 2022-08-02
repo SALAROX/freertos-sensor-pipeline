@@ -853,15 +853,7 @@ asm(BGND);
     <Properties>
       <Component_name v="SM1"/>
       <Channel v="SPI0"/>
-      <boolgroup name="Interrupt service/event" v="Enabled">
-        <Interrupt v=""/>
-        <Interrupt_from_input v="Vspi0"/>
-        <Interrupt_input_priority v="medium priority"/>
-        <Interrupt_from_output v="Vspi0"/>
-        <Interrupt_output_priority v="medium priority"/>
-        <Input_buffer_size v="0"/>
-        <Output_buffer_size v="0"/>
-      </boolgroup>
+      <boolgroup name="Interrupt service/event" v="Disabled" />
       <group name="Settings">
         <Width v="8 bits"/>
         <Bidirectional_mode v="Disabled"/>

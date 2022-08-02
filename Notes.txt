@@ -1,0 +1,2 @@
+Changing   SPI0CR1 = 0x54U;  //55 makes rfield work
+Why? --> 54 sends MSB first

@@ -104,7 +104,8 @@ ReturnCode rfal_PollNFCA( rfalNfcaListenDevice *DevList, uint8_t DevLimit, uint8
   
   rfalNfcaPollerInitialize();   /* Initialise for NFC-A */
   rfalFieldOnAndStartGT();      /* Turns the Field On if not already and start GT timer */
-
+ 
+ /*CC: Error Inside following method*/
   if( (err = rfalNfcaPollerTechnologyDetection( RFAL_COMPLIANCE_MODE_NFC, &sensRes )) != ST_ERR_NONE )
 	  return err;
   

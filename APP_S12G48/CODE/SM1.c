@@ -6,7 +6,7 @@
 **     Component : SynchroMaster
 **     Version   : Component 02.341, Driver 01.20, CPU db: 3.00.020
 **     Compiler  : CodeWarrior HC12 C Compiler
-**     Date/Time : 12/07/2022, 20:44
+**     Date/Time : 13/07/2022, 16:55
 **     Abstract  :
 **         This component "SynchroMaster" implements MASTER part of synchronous
 **         serial master-slave communication.
@@ -29,12 +29,8 @@
 **             Mode register           : SPI0CR2   [$00D9]
 **             Baud setting reg.       : SPI0BR    [$00DA]
 **
-**         Input interrupt
-**             Vector name             : Vspi0
 **             Priority                : 
 **
-**         Output interrupt
-**             Vector name             : Vspi0
 **             Priority                : 
 **
 **         Used pins                   :
@@ -69,10 +65,12 @@
 #include "CAN1.h"
 #include "TIM1.h"
 #include "GPIO_Port_S.h"
-#include "ST25_IRQ.h"
 #include "GPIO_Port_T.h"
 #include "RTI1.h"
 #include "IEE1.h"
+#include "SPI_SS.h"
+#include "ADC.h"
+#include "ST25_IRQ.h"
 
 #pragma DATA_SEG SM1_DATA              /* Select data segment "SM1_DATA" */
 #pragma CODE_SEG SM1_CODE
@@ -94,7 +92,6 @@ static byte SerFlag;                   /* Flags for serial communication */
                                        /*       5 - Running int from TX */
                                        /*       6 - Full RX buffer */
                                        /*       7 - Unused */
-static SM1_TComData BufferRead;        /* Input char SPI commmunication */
 static SM1_TComData BufferWrite;       /* Output char SPI commmunication */
 
 /*
@@ -120,10 +117,10 @@ byte SM1_Enable(void)
   if (!EnUser) {                       /* Is the device disabled by user? */
     EnUser = TRUE;                     /* If yes then set the flag "device enabled" */
     SPI0CR1_SPE = 1U;                  /* Enable device */
-    SPI0CR1_SPIE = 1U;                 /* Enable interrupts */
     if (SerFlag & FULL_TX) {           /* Is any char in transmit buffer? */
       (void)SPI0SR;                    /* Read the status register */
       SPI0DRL = BufferWrite;           /* Store char to transmitter register */
+      SerFlag &= (byte)(~(byte)FULL_TX); /* Zeroize FULL_TX flag */
     }
   }
   return ERR_OK;                       /* OK */
@@ -151,7 +148,6 @@ byte SM1_Disable(void)
   if (EnUser) {                        /* Is the device enabled by user? */
     EnUser = FALSE;                    /* If yes then set the flag "device disabled" */
     SPI0CR1_SPE = 0U;                  /* Disable device */
-    SPI0CR1_SPIE = 0U;                 /* Disable interrupts */
   }
   return ERR_OK;                       /* OK */
 }
@@ -200,21 +196,6 @@ byte SM1_Disable(void)
 */
 byte SM1_RecvChar(SM1_TComData *Chr)
 {
-  // byte FlagTmp;
-
-  // if ((SerFlag & CHAR_IN_RX) == 0U) {  /* Is any char in RX buffer? */
-  //   return ERR_RXEMPTY;                /* If no then error */
-  // }
-  // EnterCritical();                     /* Enter the critical section */
-  // *Chr = BufferRead;                   /* Read the char */
-  // FlagTmp = SerFlag;                   /* Safe the flags */
-  // SerFlag &= (byte)(~(byte)(OVERRUN_ERR | CHAR_IN_RX | FULL_RX)); /* Clear flag "char in RX buffer" */
-  // ExitCritical();                      /* Exit the critical section */
-  // if ((FlagTmp & OVERRUN_ERR) != 0U) { /* Is the overrun occured? */
-  //   return ERR_OVERRUN;                /* If yes then return error */
-  // } else {
-  //   return ERR_OK;
-  // }
   if ((SPI0SR & SPI0SR_SPIF_MASK) == 0U) { /* Is receive buffer empty? */
     return ERR_RXEMPTY;                /* If yes then error is returned */
   }
@@ -243,15 +224,15 @@ byte SM1_RecvChar(SM1_TComData *Chr)
 */
 byte SM1_SendChar(SM1_TComData Chr)
 {
-  if ((SPI0SR_SPTEF == 0U) || (SerFlag & FULL_TX))  {             /* Is any char in the TX buffer? */
-    return ERR_TXFULL;                 /* If yes then error */
+  if ((SPI0SR_SPTEF == 0U) || (SerFlag & FULL_TX)) { /* Is last character send? */
+    return ERR_TXFULL;                 /* If no then return error */
   }
   if(EnUser) {                         /* Is device enabled? */
     SPI0DRL = Chr;                     /* If yes, send character */
   } else {
     BufferWrite = Chr;                 /* If no, save character */
     SerFlag |= FULL_TX;                /* ...and set flag */
-  }                     /* Exit the critical section */
+  }
   return ERR_OK;                       /* OK */
 }
 
@@ -279,10 +260,8 @@ byte SM1_SendChar(SM1_TComData Chr)
 */
 byte SM1_CharsInRxBuf(word *Chr)
 {
-  // *Chr = (word)((SerFlag & CHAR_IN_RX)?(word)1U:(word)0U); /* Return number of chars in the receive buffer */
-  // return ERR_OK;                       /* OK */
   *Chr = (word)(SPI0SR_SPIF);          /* Return number of chars in receive buffer */
-  return ERR_OK; 
+  return ERR_OK;                       /* OK */
 }
 
 /*
@@ -300,10 +279,12 @@ byte SM1_CharsInRxBuf(word *Chr)
 **         ---             - Number of characters in the input buffer.
 ** ===================================================================
 */
+/*
 word SM1_GetCharsInRxBuf(void)
-{
-  return (word)((SerFlag & CHAR_IN_RX)?(word)1U:(word)0U); /* Return number of chars in the receive buffer */
-}
+
+**      This method is implemented as a macro. See header module. **
+*/
+
 /*
 ** ===================================================================
 **     Method      :  SM1_CharsInTxBuf (component SynchroMaster)
@@ -324,8 +305,6 @@ word SM1_GetCharsInRxBuf(void)
 */
 byte SM1_CharsInTxBuf(word *Chr)
 {
-  // *Chr = ((SerFlag & FULL_TX) ? (word)1U : (word)0U); /* Return number of chars in the transmit buffer */
-  // return ERR_OK;                       /* OK */
   *Chr = ((EnUser) ? (SPI0SR_SPTEF ? (word)0U : (word)1U) : ((SerFlag & FULL_TX) ? (word)1U : (word)0U)); /* Return number of chars in the transmit buffer */
   return ERR_OK;                       /* OK */
 }
@@ -343,11 +322,8 @@ byte SM1_CharsInTxBuf(word *Chr)
 */
 word SM1_GetCharsInTxBuf(void)
 {
-  // return ((SerFlag & FULL_TX) ? (word)1U : (word)0U); /* Return number of chars in the transmit buffer */
-   return ((EnUser) ? (SPI0SR_SPTEF ? (word)0U : (word)1U) : ((SerFlag & FULL_TX) ? (word)1U : (word)0U)); /* Return number of chars in the transmit buffer */
+  return ((EnUser) ? (SPI0SR_SPTEF ? (word)0U : (word)1U) : ((SerFlag & FULL_TX) ? (word)1U : (word)0U)); /* Return number of chars in the transmit buffer */
 }
-
-
 /*
 ** ===================================================================
 **     Method      :  SM1_Init (component SynchroMaster)
@@ -366,11 +342,11 @@ void SM1_Init(void)
   (void)SPI0SR;                        /* Read the status register */
   (void)SPI0DRL;                       /* Read the device register */
   /* SPI0BR: ??=0,SPPR2=0,SPPR1=0,SPPR0=0,??=0,SPR2=0,SPR1=1,SPR0=0 */
-  SPI0BR = 0x02U;                    /* Set the baud rate register */
+  SPI0BR = 0x02U;                      /* Set the baud rate register */
   /* SPI0CR2: ??=0,XFRW=0,??=0,MODFEN=0,BIDIROE=0,??=0,SPISWAI=0,SPC0=0 */
   SPI0CR2 = 0x00U;                     /* Set control register 2 */
-  /* SPI0CR1: SPIE=1,SPE=1,SPTIE=0,MSTR=1,CPOL=0,CPHA=1,SSOE=0,LSBFE=1 */
-  SPI0CR1 = 0x54U; //0xD5  54                  /* Set control register 1 */
+  /* SPI0CR1: SPIE=0,SPE=1,SPTIE=0,MSTR=1,CPOL=0,CPHA=1,SSOE=0,LSBFE=1 */
+  SPI0CR1 = 0x54U;  //55                   /* Set control register 1 */
   SerFlag = 0U;                        /* Reset all flags */
   EnUser = TRUE;                       /* Enable device */
 }

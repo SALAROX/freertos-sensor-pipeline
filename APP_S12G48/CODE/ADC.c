@@ -22,7 +22,7 @@
 **              A/D channel (pin)                          : PAD0_KWAD0_AN0
 **              A/D channel (pin) signal                   : 
 **          A/D resolution                                 : Autoselect
-**          Conversion time                                : 30 µs
+**          Conversion time                                : 30 ï¿½s
 **          Sample time                                    : 24 clock periods
 **          Discharge before sampling                      : Disabled
 **          Result mode                                    : Right justified

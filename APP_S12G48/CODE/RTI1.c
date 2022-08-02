@@ -106,7 +106,7 @@ void RTI1_Init(void)
   /* CPMUINT: RTIE=1 */
   setReg8Bits(CPMUINT, 0x80U);          
   /* CPMURTI: RTDEC=1,RTR6=0,RTR5=0,RTR4=0,RTR3=1,RTR2=1,RTR1=1,RTR0=1 */
-  setReg8(CPMURTI, 0x8FU);              
+  setReg8(CPMURTI, 0x8FU);  //0x8F            
 }
 
 /* END RTI1. */

@@ -40,7 +40,7 @@
 void ST25_IRQ_OnInterrupt(void)
 {
   /* place your ST25_IRQ interrupt procedure body here */
-  st25r3911Isr();
+  // st25r3911Isr();
 }
 
 
@@ -62,6 +62,24 @@ void ADC_OnEnd(void)
 {
   /* Write your code here ... */
 }
+
+/*
+** ===================================================================
+**     Event       :  ST25_IRQ_Interrupt (module Events)
+**
+**     Component   :  ST25_IRQ [ExtInt]
+**     Description :
+**         This event is called when an active signal edge/level has
+**         occurred.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+// void ST25_IRQ_Interrupt(void)
+// {
+//   /* place your ST25_IRQ interrupt procedure body here */
+// }
+
 
 /* END Events */
 

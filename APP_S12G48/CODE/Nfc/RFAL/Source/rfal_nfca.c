@@ -215,14 +215,16 @@ ReturnCode rfalNfcaPollerCheckPresence( rfal14443AShortFrameCmd cmd, rfalNfcaSen
 ReturnCode rfalNfcaPollerTechnologyDetection( rfalComplianceMode compMode, rfalNfcaSensRes *sensRes )
 {
     ReturnCode ret;
-    
+    /*CC: Presence is Detected Succesfully*/
     EXIT_ON_ERR( ret, rfalNfcaPollerCheckPresence( ((compMode == RFAL_COMPLIANCE_MODE_EMV) ? RFAL_14443A_SHORTFRAME_CMD_WUPA : RFAL_14443A_SHORTFRAME_CMD_REQA), sensRes ) );
     
     /* Send SLP_REQ as  Activity 1.1  9.2.3.6 and EMVCo 2.6  9.2.1.3 */
     if( compMode != RFAL_COMPLIANCE_MODE_ISO)
     {
+        /*CC: Problem is here*/
         EXIT_ON_ERR( ret, rfalNfcaPollerSleep() );
     }
+    
     return ST_ERR_NONE;
 }
 

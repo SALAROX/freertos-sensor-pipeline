@@ -1,10 +1,10 @@
 Processor Expert Version 0446
-ProjectModificationStamp=43
+ProjectModificationStamp=46
 
 [Header]
 Name=Generic_Latch_Bootloader
 SavedBy=CTLWKS016
-ModificationStamp=43
+ModificationStamp=46
 Date=2022-07-13
 Product=Processor Expert version 3.05 for Freescale HCS12(X) family
 IDE=CW Plug-In IDE
@@ -9292,7 +9292,7 @@ Expanded=No
 List=GrupItem
 [ItemState]
 ItemSymbol=Pin1
-Value=PP1_KWP1_ETRIG1_ECLKX2_PWM1
+Value=
 [ItemState]
 ItemSymbol=Pin1Signal
 ReadOnly=No
@@ -12180,7 +12180,7 @@ List=Event
 [SynchroMaster:SM1]
 CompNumb=26
 CompEnabled=Yes
-GenCodeMode=DONT_WRITE
+GenCodeMode=ALWAYS_WRITE
 IconName=PHONE
 Comment=0
 Template=
@@ -12202,8 +12202,8 @@ Value=SPI0
 ItemSymbol=IntService
 ReadOnly=No
 UserReadOnly=No
-Value=Yes
-Expanded=Yes
+Value=No
+Expanded=No
 
 [Childs]
 List=GrupItem
@@ -12954,12 +12954,12 @@ UsrMethodName=SetIdleClockPolarity
 [EndOfChilds]
 [ItemState]
 ItemSymbol=GetError
-ReadOnly=No
+ReadOnly=Yes
 UserReadOnly=No
 Index=1
 Value=No
 LastSelection=No
-LastUserSel=no
+LastUserSel=never
 UsrMethodName=GetError
 [ItemState]
 ItemSymbol=CPUCond1
@@ -13070,7 +13070,7 @@ LastSelection=No
 LastUserSel=never
 [ItemState]
 ItemSymbol=OnRxChar
-ReadOnly=No
+ReadOnly=Yes
 UserReadOnly=No
 Value=No
 Expanded=No
@@ -13090,10 +13090,10 @@ Value=same as interrupt
 
 [EndOfChilds]
 LastSelection=No
-LastUserSel=no
+LastUserSel=never
 [ItemState]
 ItemSymbol=OnRxCharExt
-ReadOnly=No
+ReadOnly=Yes
 UserReadOnly=No
 Value=No
 Expanded=No
@@ -13113,10 +13113,10 @@ Value=same as interrupt
 
 [EndOfChilds]
 LastSelection=No
-LastUserSel=no
+LastUserSel=never
 [ItemState]
 ItemSymbol=OnTxChar
-ReadOnly=No
+ReadOnly=Yes
 UserReadOnly=No
 Value=No
 Expanded=No
@@ -13136,7 +13136,7 @@ Value=same as interrupt
 
 [EndOfChilds]
 LastSelection=No
-LastUserSel=no
+LastUserSel=never
 [ItemState]
 ItemSymbol=OnFullRxBuf
 ReadOnly=Yes
@@ -13185,7 +13185,7 @@ LastSelection=Yes
 LastUserSel=never
 [ItemState]
 ItemSymbol=OnError
-ReadOnly=No
+ReadOnly=Yes
 UserReadOnly=No
 Value=No
 Expanded=No
@@ -13205,7 +13205,7 @@ Value=same as interrupt
 
 [EndOfChilds]
 LastSelection=No
-LastUserSel=no
+LastUserSel=never
 [ItemState]
 ItemSymbol=CPUCond0
 ReadOnly=No
@@ -13242,7 +13242,7 @@ LastUserSel=never
 [BitIO:SPI_SS]
 CompNumb=27
 CompEnabled=Yes
-GenCodeMode=CHECK_n_WRITE
+GenCodeMode=DONT_WRITE
 IconName=BITIO
 Comment=0
 Template=
@@ -13495,7 +13495,7 @@ List=Event
 [ADC:ADC]
 CompNumb=28
 CompEnabled=Yes
-GenCodeMode=CHECK_n_WRITE
+GenCodeMode=DONT_WRITE
 IconName=AD
 Comment=0
 Template=
@@ -15438,7 +15438,7 @@ LastUserSel=yes
 [ExtInt:ST25_IRQ]
 CompNumb=29
 CompEnabled=Yes
-GenCodeMode=CHECK_n_WRITE
+GenCodeMode=DONT_WRITE
 IconName=EXTINT
 Comment=0
 Template=

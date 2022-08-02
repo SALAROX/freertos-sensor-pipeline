@@ -66,6 +66,19 @@ void ADC_OnEnd(void);
 ** ===================================================================
 */
 
+// void ST25_IRQ_Interrupt(void);
+/*
+** ===================================================================
+**     Event       :  ST25_IRQ_Interrupt (module Events)
+**
+**     Component   :  ST25_IRQ [ExtInt]
+**     Description :
+**         This event is called when an active signal edge/level has
+**         occurred.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
 /* END Events */
 #endif /* __Events_H*/
 

@@ -132,9 +132,9 @@ void main(void)
 	(void)NFC_init();
 
   /*CAN TRCV Normal Mode*/
-  CAN_STB_MODE(NORMAL);
+  // CAN_STB_MODE(NORMAL);
 
-  CAN_drv_init();
+  // CAN_drv_init();
 
   SYS_SelectScheduler((uint8_t)SYS_defaultSched);
   SYS_sleepStatus = SYS_running;
@@ -160,7 +160,7 @@ void main(void)
     /* Runs as fast as possible */
     if (Comm_Mode == COMM_CAN)
     {
-      UDS_Diagnostics_Handler();
+      // UDS_Diagnostics_Handler();
     }
 
 #if 1
@@ -186,8 +186,7 @@ void main(void)
       SYS_schedClock1ms++;
       sysTickTimer++;
 
-      /* Main NFC Task Handler */
-		NFC_Task();
+      
     }
     else
     {
@@ -195,8 +194,8 @@ void main(void)
     }
 #endif
 
-    /*State Machine for Bootloader*/
-    // STM_Bootloader();
+    /* Main NFC Task Handler */
+		NFC_Task();
   }
   /*** Processor Expert end of main routine. DON'T WRITE CODE BELOW!!! ***/
 } /*** End of main routine. DO NOT MODIFY THIS TEXT!!! ***/
@@ -214,6 +213,7 @@ static void SYS_DefaultScheduler(void)
   case 0:
     // PTT_PTT3 ^= 1;
     // UDS_Diagnostics_Handler();
+    // PT1AD_PT1AD2 ^= 1;
     break;
 
   default:
@@ -224,6 +224,8 @@ static void SYS_DefaultScheduler(void)
   {
   case 0:
     // PTT_PTT3 ^= 1;
+    // PTS_PTS0 ^= 1;
+    PT1AD_PT1AD1 ^= 1;
     break;
 
   default:

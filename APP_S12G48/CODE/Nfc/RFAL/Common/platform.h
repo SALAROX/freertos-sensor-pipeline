@@ -87,7 +87,7 @@
 #define platformTimerIsExpired( timer )               	timerIsExpired(timer)                         /*!< Checks if the given timer is expired        */
 #define platformDelay( t )                            	timerDelay(t)                                 /*!< Performs a delay for the given time (ms)    */
 
-#define PlatformST25IRQisHigh()							ST25IRQ_GetVal()
+#define PlatformST25IRQisHigh()							ST25_IRQ_GetVal()
 #define platformSpiSelect()								SPI_SS_ClrVal()
 #define platformSpiDeselect()							SPI_SS_SetVal()
 

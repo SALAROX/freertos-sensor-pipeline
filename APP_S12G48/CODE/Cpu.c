@@ -7,7 +7,7 @@
 **     Version   : Component 01.016, Driver 02.06, CPU db: 3.00.020
 **     Datasheet : MC9S12GRMV1 Rev. 1.02 June 7, 2011
 **     Compiler  : CodeWarrior HC12 C Compiler
-**     Date/Time : 13/07/2022, 08:22
+**     Date/Time : 13/07/2022, 16:55
 **     Abstract  :
 **         This component "MC9S12G64_32" implements properties, methods,
 **         and events of the CPU.
@@ -231,11 +231,17 @@ void PE_low_level_init(void)
   /* PIEP: PIEP1=0 */
   clrReg8Bits(PIEP, 0x02U);             
   /* PTP: PTP1=1 */
-  setReg8Bits(PTP, 0x02U);              
-  /* PERP: PERP1=0 */
-  clrReg8Bits(PERP, 0x02U);             
+  clrReg8Bits(PTP, 0x02U);//setReg8Bits(PTP, 0x02U);              
+  /* PERP: PERP1=1 -> Pull enabled */
+  setReg8Bits(PERP, 0x02U);//clrReg8Bits(PERP, 0x02U); 
+  /* PPSP: PPSP1=1 -> PullDOWN */
+  setReg8Bits(PPSP, 0x02U);            
   /* DDRP: DDRP1=1 */
-  setReg8Bits(DDRP, 0x02U);                                
+  setReg8Bits(DDRP, 0x02U);             
+  /* PER1AD: PER1AD6=0 */
+  setReg8Bits(PER1AD, 0x40U);//PEx: clrReg8Bits(PER1AD, 0x40U);           
+  /* DDR1AD: DDR1AD6=0 */
+  clrReg8Bits(DDR1AD, 0x40U); /*1:Output -- 0:Input*/           
   /* ACMPC: ACDIEN=1 */
   setReg8Bits(ACMPC, 0x10U);            
   /* CPMUINT: LOCKIE=0,OSCIE=0 */
@@ -247,16 +253,10 @@ void PE_low_level_init(void)
   /* ATDDIEN: IEN6=1,IEN0=0 */
   clrSetReg16Bits(ATDDIEN, 0x01U, 0x40U); 
   /* PPS01AD: PPS1AD6=1 */
-  // setReg16Bits(PPS01AD, 0x40U);  CC  
-  /* DDR1AD: DDR1AD6=0 */
-  clrReg8Bits(DDR01AD, 0x40U);
-  /* PER1AD: PER1AD6=1 */
-  setReg8Bits(PER01AD, 0x40U); //clrReg8Bits(PER1AD, 0x40U);  
-  /* PPS1AD: PPS1AD6=1 */
-  setReg8Bits(PPS1AD, 0x40U);      
+  setReg8Bits(PPS1AD, 0x40U);         
   /* ### MC9S12G64_32 "Cpu" init code ... */
   /* ### Init_MSCAN "CAN1" init code ... */
-  CAN1_Init();
+  // CAN1_Init();
   /* ### Init_TIM "TIM1" init code ... */
   TIM1_Init();
   /* ### Init_GPIO "GPIO_Port_S" init code ... */
@@ -273,8 +273,13 @@ void PE_low_level_init(void)
   /* ###  "ADC" init code ... */
   ADC_Init();
   /* ### External interrupt "ST25_IRQ" init code ... */
-  PIF01AD = 0x40U;                      /* Clear flag */
-  PIE01AD_PIE1AD6 = 1U;                /* Enable interrupt */
+  PIF1AD = 0x40U;                      /* Clear flag */ //The FK issue
+  PIE1AD_PIE1AD6 = 1U;                /* Enable interrupt */ //The FK issue
+
+  /*Enable Debug Pins*/
+  setReg8Bits(DDR1AD, 0x06U); /*1:Output -- 0:Input*/ 
+  setReg8Bits(PPS1AD, 0x06U);
+  setReg8Bits(PER1AD, 0x06U);
   __EI();                              /* Enable interrupts */
 }
 

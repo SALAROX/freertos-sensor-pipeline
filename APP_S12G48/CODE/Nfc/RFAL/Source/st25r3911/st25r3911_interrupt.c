@@ -122,7 +122,7 @@ void st25r3911CheckForReceivedInterrupts( void )
     ST_MEMSET( iregs, (int32_t)(ST25R3911_IRQ_MASK_ALL & 0xFFU), ST25R3911_INT_REGS_LEN );  /* MISRA 10.3 */
         
     /* In case the IRQ is Edge (not Level) triggered read IRQs until done */
-    //while( PlatformST25IRQisHigh() )
+    // while( PlatformST25IRQisHigh() ) //Uncommented by CC
     {
         st25r3911ReadMultipleRegisters(ST25R3911_REG_IRQ_MAIN, iregs, sizeof(iregs));
        

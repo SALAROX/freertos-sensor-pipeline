@@ -5,7 +5,7 @@
 **     Processor : MC9S12G48VLC
 **     Version   : Component 01.016, Driver 02.06, CPU db: 3.00.020
 **     Compiler  : CodeWarrior HC12 C Compiler
-**     Date/Time : 13/07/2022, 08:22
+**     Date/Time : 13/07/2022, 16:55
 **     Abstract  :
 **         This component "MC9S12G64_32" implements properties, methods,
 **         and events of the CPU.
@@ -79,7 +79,7 @@ static const tIsrFunc _InterruptVectorTable[] @0xFF80U = { /* Interrupt vector t
   &ADC_Interrupt,                       /* 0x69  0xFFD2   ivVatd        used by PE */
   &Cpu_Interrupt,                       /* 0x6A  0xFFD4   ivVsci1       unused by PE */
   &Cpu_Interrupt,                       /* 0x6B  0xFFD6   ivVsci0       unused by PE */
-  &ST25_IRQ_Interrupt,   //SM1_Interrupt   /* 0x6C  0xFFD8   ivVspi0       used by PE */
+  &Cpu_Interrupt,                       /* 0x6C  0xFFD8   ivVspi0       unused by PE */
   &Cpu_Interrupt,                       /* 0x6D  0xFFDA   ivVReserved18 unused by PE */
   &Cpu_Interrupt,                       /* 0x6E  0xFFDC   ivVReserved17 unused by PE */
   &Cpu_Interrupt,                       /* 0x6F  0xFFDE   ivVtimovf     unused by PE */

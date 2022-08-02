@@ -1677,7 +1677,7 @@ static void rfalTransceiveTx( void )
         case RFAL_TXRX_STATE_TX_TRANSMIT:   /*  PRQA S 2003 # MISRA 16.3 - Intentional fall through */
             
             /* Clear FIFO, Clear and Enable the Interrupts */
-            rfalPrepareTransceive( );
+            PT1AD_PT1AD2 ^= 1;PT1AD_PT1AD2 ^= 1;rfalPrepareTransceive( );
 
             /* Calculate when Water Level Interrupt will be triggered */
             gRFAL.fifo.expWL = (uint16_t)( st25r3911CheckReg( ST25R3911_REG_IO_CONF1, ST25R3911_REG_IO_CONF1_fifo_lt, ST25R3911_REG_IO_CONF1_fifo_lt_16bytes) ? RFAL_FIFO_OUT_LT_16 : RFAL_FIFO_OUT_LT_32 );

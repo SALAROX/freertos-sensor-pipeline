@@ -114,9 +114,12 @@ void ST25_IRQ_Disable(void)
 ** ===================================================================
 */
 #pragma CODE_SEG __NEAR_SEG NON_BANKED
+
 ISR(ST25_IRQ_Interrupt)
 {
-  PIF01AD = 0x40U;                      /* Clear flag */
+  // PTS_PTS1 ^= 1;
+  // PT1AD_PT1AD2 ^= 1;
+  PIF1AD = 0x40U;                      /* Clear flag */
   st25r3911Isr();
 }
 

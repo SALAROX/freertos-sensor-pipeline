@@ -60,15 +60,15 @@
 void GPIO_Port_S_Init(void)
 {
   /* PTS: PTS7=1 */
-  setReg8Bits(PTS, 0x80U);              
+  setReg8Bits(PTS, 0x83U);              
   /* PPSS: PPSS7=1 */
-  setReg8Bits(PPSS, 0x80U);             
+  setReg8Bits(PPSS, 0x83U);             
   /* WOMS: WOMS7=0 */
-  clrReg8Bits(WOMS, 0x80U);             
+  clrReg8Bits(WOMS, 0x83U);             
   /* PERS: PERS7=1 */
-  setReg8Bits(PERS, 0x80U);             
+  setReg8Bits(PERS, 0x83U);             
   /* DDRS: DDRS7=1 */
-  setReg8Bits(DDRS, 0x80U);             
+  setReg8Bits(DDRS, 0x83U);   /*0x83 to enable debug pins*/          
 }
 
 /* END GPIO_Port_S. */

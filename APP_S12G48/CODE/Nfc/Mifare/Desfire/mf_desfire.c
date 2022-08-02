@@ -1048,6 +1048,7 @@ MFDF_RetCode_t MFDF_AppFormat(MFDF_Device_t *dev)
 	return MFDF_ERR_NONE;
 }
 /*******************************************************************/
+#if 0
 MFDF_RetCode_t MFDF_GetVersion(MFDF_Device_t *dev, MFDF_DevInfo_t *DevInfo)
 {
 	MFDF_RetCode_t		err;
@@ -1135,6 +1136,7 @@ MFDF_RetCode_t MFDF_GetVersion(MFDF_Device_t *dev, MFDF_DevInfo_t *DevInfo)
 	
 	return MFDF_ERR_NONE;
 }
+#endif
 /*******************************************************************/
 MFDF_RetCode_t MFDF_GetFileID(MFDF_Device_t *dev, MFDF_FID_t *FileIDList, uint8_t ListSize, uint8_t *FileCnt)
 {
