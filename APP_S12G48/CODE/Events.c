@@ -40,7 +40,7 @@
 void ST25_IRQ_OnInterrupt(void)
 {
   /* place your ST25_IRQ interrupt procedure body here */
-  // st25r3911Isr();
+  st25r3911Isr();
 }
 
 
@@ -61,6 +61,45 @@ void ST25_IRQ_OnInterrupt(void)
 void ADC_OnEnd(void)
 {
   /* Write your code here ... */
+}
+
+/*
+** ===================================================================
+**     Event       :  ST25_IRQ_Interrupt (module Events)
+**
+**     Component   :  ST25_IRQ [ExtInt]
+**     Description :
+**         This event is called when an active signal edge/level has
+**         occurred.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+// void ST25_IRQ_Interrupt(void)
+// {
+//   /* place your ST25_IRQ interrupt procedure body here */
+// }
+
+
+/*
+** ===================================================================
+**     Event       :  Timer_1ms_OnInterrupt (module Events)
+**
+**     Component   :  Timer_1ms [TimerInt]
+**     Description :
+**         When a timer interrupt occurs this event is called (only
+**         when the component is enabled - <Enable> and the events are
+**         enabled - <EnableEvent>). This event is enabled only if a
+**         <interrupt service/event> is enabled.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void Timer_1ms_OnInterrupt(void)
+{
+  ISR_SchedulerTick();
+  tickInc();
+  PT1AD_PT1AD1 ^= 1;
 }
 
 /*

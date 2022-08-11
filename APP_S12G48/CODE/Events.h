@@ -24,15 +24,14 @@
 #include "PE_Const.h"
 #include "IO_Map.h"
 #include "CAN1.h"
-#include "TIM1.h"
 #include "GPIO_Port_S.h"
 #include "GPIO_Port_T.h"
-#include "RTI1.h"
 #include "IEE1.h"
 #include "SM1.h"
 #include "SPI_SS.h"
 #include "ADC.h"
 #include "ST25_IRQ.h"
+#include "Timer_1ms.h"
 
 #pragma CODE_SEG DEFAULT
 
@@ -67,6 +66,35 @@ void ADC_OnEnd(void);
 */
 
 // void ST25_IRQ_Interrupt(void);
+/*
+** ===================================================================
+**     Event       :  ST25_IRQ_Interrupt (module Events)
+**
+**     Component   :  ST25_IRQ [ExtInt]
+**     Description :
+**         This event is called when an active signal edge/level has
+**         occurred.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void Timer_1ms_OnInterrupt(void);
+/*
+** ===================================================================
+**     Event       :  Timer_1ms_OnInterrupt (module Events)
+**
+**     Component   :  Timer_1ms [TimerInt]
+**     Description :
+**         When a timer interrupt occurs this event is called (only
+**         when the component is enabled - <Enable> and the events are
+**         enabled - <EnableEvent>). This event is enabled only if a
+**         <interrupt service/event> is enabled.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+
+void ST25_IRQ_Interrupt(void);
 /*
 ** ===================================================================
 **     Event       :  ST25_IRQ_Interrupt (module Events)

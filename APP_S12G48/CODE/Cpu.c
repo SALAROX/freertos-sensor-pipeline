@@ -28,10 +28,8 @@
 /* MODULE Cpu. */
 
 #include "CAN1.h"
-#include "TIM1.h"
 #include "GPIO_Port_S.h"
 #include "GPIO_Port_T.h"
-#include "RTI1.h"
 #include "IEE1.h"
 #include "SM1.h"
 #include "SPI_SS.h"
@@ -39,6 +37,7 @@
 #include "ST25_IRQ.h"
 #include "Events.h"
 #include "Cpu.h"
+#include "Timer_1ms.h"
 
 #define CGM_DELAY  0x0CFFU
 
@@ -61,7 +60,7 @@ volatile byte CCR_reg;                 /* Current CCR reegister */
 ** ===================================================================
 */
 ISR(Cpu_Interrupt)
-{
+{/*PT1AD_PT1AD2 ^= 1;*/
   /*lint -save -e950 Disable MISRA rule (1.1) checking. */
   asm(BGND);
   /*lint -restore Enable MISRA rule (1.1) checking. */
@@ -243,9 +242,27 @@ void PE_low_level_init(void)
   /* DDR1AD: DDR1AD6=0 */
   clrReg8Bits(DDR1AD, 0x40U); /*1:Output -- 0:Input*/           
   /* ACMPC: ACDIEN=1 */
-  setReg8Bits(ACMPC, 0x10U);            
+  setReg8Bits(ACMPC, 0x10U); 
+    /* TSCR1: TEN=0,TSWAI=0,TSFRZ=0,TFFCA=0,PRNT=1,??=0,??=0,??=0 */
+  setReg8(TSCR1, 0x08U);                
+  /* OCPD: OCPD0=1 */
+  setReg8Bits(OCPD, 0x01U);             
+  /* TIOS: IOS0=1 */
+  setReg8Bits(TIOS, 0x01U);             
+  /* TCTL2: OM0=0,OL0=0 */
+  clrReg8Bits(TCTL2, 0x03U);            
+  /* TTOV: TOV0=0 */
+  clrReg8Bits(TTOV, 0x01U);             
+  /* TSCR2: TOI=0 */
+  clrReg8Bits(TSCR2, 0x80U);            
+  /* TFLG1: ??=1,??=1,C5F=1,C4F=1,C3F=1,C2F=1,C1F=1,C0F=1 */
+  setReg8(TFLG1, 0xFFU);                
+  /* TIE: C0I=1 */
+  setReg8Bits(TIE, 0x01U);              
+  /* PTPSR: PTPS7=0,PTPS6=0,PTPS5=0,PTPS4=0,PTPS3=0,PTPS2=0,PTPS1=0,PTPS0=0 */
+  setReg8(PTPSR, 0x00U);            
   /* CPMUINT: LOCKIE=0,OSCIE=0 */
-  clrReg8Bits(CPMUINT, 0x12U);          
+  clrReg8Bits(CPMUINT, 0x92U);    //0x12      
   /* CPMULVCTL: LVIE=0 */
   clrReg8Bits(CPMULVCTL, 0x02U);        
   /* IRQCR: IRQEN=0 */
@@ -256,15 +273,11 @@ void PE_low_level_init(void)
   setReg8Bits(PPS1AD, 0x40U);         
   /* ### MC9S12G64_32 "Cpu" init code ... */
   /* ### Init_MSCAN "CAN1" init code ... */
-  // CAN1_Init();
-  /* ### Init_TIM "TIM1" init code ... */
-  TIM1_Init();
+  CAN1_Init();
   /* ### Init_GPIO "GPIO_Port_S" init code ... */
   GPIO_Port_S_Init();
   /* ### Init_GPIO "GPIO_Port_T" init code ... */
   GPIO_Port_T_Init();
-  /* ### Init_RTI "RTI1" init code ... */
-  RTI1_Init();
   /* ### IntEEPROM "IEE1" init code ... */
   IEE1_Init();
   /* ###  Synchro master "SM1" init code ... */
@@ -275,6 +288,15 @@ void PE_low_level_init(void)
   /* ### External interrupt "ST25_IRQ" init code ... */
   PIF1AD = 0x40U;                      /* Clear flag */ //The FK issue
   PIE1AD_PIE1AD6 = 1U;                /* Enable interrupt */ //The FK issue
+
+/* ### TimerInt "Timer_1ms" init code ... */
+  
+  
+  /* TC0: BIT15=0,BIT14=1,BIT13=1,BIT12=0,BIT11=0,BIT10=0,BIT9=0,BIT8=1,BIT7=1,BIT6=0,BIT5=1,BIT4=0,BIT3=1,BIT2=0,BIT1=0,BIT0=0 */
+  setReg16(TC0, 0x61A8U);              /* Store given value to the compare register */ 
+  /* Common peripheral initialization - ENABLE */
+  /* TSCR1: TEN=1,TSWAI=0,TSFRZ=0,TFFCA=0,PRNT=1,??=0,??=0,??=0 */
+  setReg8(TSCR1, 0x88U);
 
   /*Enable Debug Pins*/
   setReg8Bits(DDR1AD, 0x06U); /*1:Output -- 0:Input*/ 

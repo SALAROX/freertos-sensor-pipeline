@@ -70,7 +70,14 @@ void init_frames(void)
 /*CAN PCL Rear Left Latch*/
 	CAN_Frames[CompWLatchDiagRes].ID = 0x7FB; /*Diag Response based on ISO15765-4*/
 	CAN_Frames[CompWLatchDiagReq].ID = 0x7F3; /*Diag Request based on ISO15765-4*/
+#elif NFC_READER_EXTERIOR
+	CAN_Frames[CompWLatchDiagRes].ID = 0x758; /*Diag Response based on ISO15765-4*/
+	CAN_Frames[CompWLatchDiagReq].ID = 0x750; /*Diag Request based on ISO15765-4*/
+#elif NFC_READER_INTERIOR
+	CAN_Frames[CompWLatchDiagRes].ID = 0x759; /*Diag Response based on ISO15765-4*/
+	CAN_Frames[CompWLatchDiagReq].ID = 0x751; /*Diag Request based on ISO15765-4*/
 #endif
+
 	CAN_Frames[CompWLatchDiagRes].DLC = 8;
 	CAN_Frames[CompWLatchDiagRes].Direction = CAN_TX;
 	CAN_Frames[CompWLatchDiagRes].Cycle_ms = CYCLIC_FRAME_10MS /*CYCLIC_FRAME_20MS*/;

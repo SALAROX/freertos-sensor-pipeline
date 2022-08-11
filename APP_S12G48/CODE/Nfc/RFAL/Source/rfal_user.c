@@ -6,6 +6,7 @@
  */
 #include "rfal_user.h"
 #include "rfal_rf.h"
+#include "Timer_1ms.h"
 
 /*
 ******************************************************************************
@@ -22,7 +23,7 @@
 #define RFAL_BUF_LEN                  		255
 #define RFAL_NFCV_BLOCK_LEN           		4
 
-
+uint8_t error_check;
 /*
  ******************************************************************************
  * LOCAL VARIABLES
@@ -101,16 +102,17 @@ ReturnCode rfal_PollNFCA( rfalNfcaListenDevice *DevList, uint8_t DevLimit, uint8
 {
   ReturnCode        err;
   rfalNfcaSensRes   sensRes;
-  
+
   rfalNfcaPollerInitialize();   /* Initialise for NFC-A */
   rfalFieldOnAndStartGT();      /* Turns the Field On if not already and start GT timer */
  
  /*CC: Error Inside following method*/
+ 
   if( (err = rfalNfcaPollerTechnologyDetection( RFAL_COMPLIANCE_MODE_NFC, &sensRes )) != ST_ERR_NONE )
 	  return err;
   
   err = rfalNfcaPollerFullCollisionResolution( RFAL_COMPLIANCE_MODE_NFC, DevLimit, DevList, DevCnt);
-  
+     
   return err;
 }
 /*******************************************************************************/

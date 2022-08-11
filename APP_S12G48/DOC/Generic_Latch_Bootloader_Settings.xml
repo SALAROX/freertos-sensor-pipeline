@@ -299,7 +299,7 @@ asm(BGND);
   </Bean>
 
   <Bean name="TIM1" type="Init_TIM">
-    <Enabled v="Y"/>
+    <Enabled v="N"/>
 
     <Properties>
       <Component_name v="TIM1"/>
@@ -692,7 +692,7 @@ asm(BGND);
   </Bean>
 
   <Bean name="RTI1" type="Init_RTI">
-    <Enabled v="Y"/>
+    <Enabled v="N"/>
 
     <Properties>
       <Component_name v="RTI1"/>
@@ -1063,6 +1063,61 @@ asm(BGND);
       <Event_module_name v="Events"/>
       <event name="OnInterrupt" v="generate code">
         <Event_procedure_name v="ST25_IRQ_Interrupt"/>
+        <Priority v="same as interrupt"/>
+      </event>
+    </Events>
+  </Bean>
+
+  <Bean name="Timer_1ms" type="TimerInt">
+    <Enabled v="Y"/>
+
+    <Properties>
+      <Component_name v="Timer_1ms"/>
+      <Periodic_interrupt_source v="TC0"/>
+      <Counter v="TIM_Counter"/>
+      <boolgroup name="Interrupt service/event" v="Enabled">
+        <Interrupt v="Vtimch0"/>
+        <Interrupt_priority v="medium priority"/>
+      </boolgroup>
+      <Interrupt_period v="1 ms"/>
+      <Same_period_in_modes v="yes"/>
+      <Component_uses_entire_timer v="no"/>
+      <group name="Initialization">
+        <Enabled_in_init__code v="yes"/>
+        <Events_enabled_in_init_ v="yes"/>
+        <Stop_in_wait_mode v="no"/>
+        <Stop_in_freeze_mode v="no"/>
+      </group>
+      <group name="CPU clock/speed selection">
+        <High_speed_mode v="This component enabled"/>
+        <Low_speed_mode v="This component disabled"/>
+        <Slow_speed_mode v="This component disabled"/>
+      </group>
+    </Properties>
+
+    <Methods>
+      <Enable v="generate code"/>
+      <Disable v="generate code"/>
+      <EnableEvent v="don&apos;t generate code"/>
+      <DisableEvent v="don&apos;t generate code"/>
+      <SetPeriodMode v="don&apos;t generate code"/>
+      <SetPeriodTicks16 v="don&apos;t generate code"/>
+      <SetPeriodTicks32 v="don&apos;t generate code"/>
+      <SetPeriodUS v="don&apos;t generate code"/>
+      <SetPeriodMS v="don&apos;t generate code"/>
+      <SetPeriodSec v="don&apos;t generate code"/>
+      <SetPeriodReal v="don&apos;t generate code"/>
+      <SetFreqHz v="don&apos;t generate code"/>
+      <SetFreqkHz v="don&apos;t generate code"/>
+      <SetFreqMHz v="don&apos;t generate code"/>
+    </Methods>
+
+    <Events>
+      <Event_module_name v="Events"/>
+      <event name="BeforeNewSpeed" v="don&apos;t generate code" />
+      <event name="AfterNewSpeed" v="don&apos;t generate code" />
+      <event name="OnInterrupt" v="generate code">
+        <Event_procedure_name v="Timer_1ms_OnInterrupt"/>
         <Priority v="same as interrupt"/>
       </event>
     </Events>

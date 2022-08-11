@@ -63,10 +63,8 @@
 
 #include "SM1.h"
 #include "CAN1.h"
-#include "TIM1.h"
 #include "GPIO_Port_S.h"
 #include "GPIO_Port_T.h"
-#include "RTI1.h"
 #include "IEE1.h"
 #include "SPI_SS.h"
 #include "ADC.h"
@@ -200,6 +198,7 @@ byte SM1_RecvChar(SM1_TComData *Chr)
     return ERR_RXEMPTY;                /* If yes then error is returned */
   }
   *Chr = SPI0DRL;                      /* Read data from receiver */
+  
   return ERR_OK;
 }
 
@@ -224,10 +223,11 @@ byte SM1_RecvChar(SM1_TComData *Chr)
 */
 byte SM1_SendChar(SM1_TComData Chr)
 {
-  if ((SPI0SR_SPTEF == 0U) || (SerFlag & FULL_TX)) { /* Is last character send? */
+  if ((SPI0SR_SPTEF == 0U) /*|| (SerFlag & FULL_TX)*/) { /* Is last character send? */
+    // PT1AD_PT1AD2 ^= 1;
     return ERR_TXFULL;                 /* If no then return error */
   }
-  if(EnUser) {                         /* Is device enabled? */
+  if(1/*EnUser*/) {                         /* Is device enabled? */
     SPI0DRL = Chr;                     /* If yes, send character */
   } else {
     BufferWrite = Chr;                 /* If no, save character */
@@ -342,7 +342,7 @@ void SM1_Init(void)
   (void)SPI0SR;                        /* Read the status register */
   (void)SPI0DRL;                       /* Read the device register */
   /* SPI0BR: ??=0,SPPR2=0,SPPR1=0,SPPR0=0,??=0,SPR2=0,SPR1=1,SPR0=0 */
-  SPI0BR = 0x02U;                      /* Set the baud rate register */
+  SPI0BR = 0x02U;                      /* Set the baud rate register */ //0x02-> 3.125Mbit/s
   /* SPI0CR2: ??=0,XFRW=0,??=0,MODFEN=0,BIDIROE=0,??=0,SPISWAI=0,SPC0=0 */
   SPI0CR2 = 0x00U;                     /* Set control register 2 */
   /* SPI0CR1: SPIE=0,SPE=1,SPTIE=0,MSTR=1,CPOL=0,CPHA=1,SSOE=0,LSBFE=1 */

@@ -9,11 +9,6 @@ Module "CAN1"      (component Init_MSCAN_HCS12)
                 this method in user code to initialize the module. By default, the method is called by PE automatically; see 
                 "Call Init method" property of the component for more details.
 
-Module "TIM1"      (component Init_TIM_HCS12)
-   - TIM1_Init -This method initializes registers of the TIM module according to this Peripheral Initialization settings. Call 
-                this method in user code to initialize the module. By default, the method is called by PE automatically; see 
-                "Call Init method" property of the component for more details.
-
 Module "GPIO_Port_S" (component Init_GPIO_HCS12)
    - GPIO_Port_S_Init -This method initializes registers of the GPIO module according to this Peripheral Initialization 
                 settings. Call this method in the user code to initialize the module. By default, the method is called by PE 
@@ -23,11 +18,6 @@ Module "GPIO_Port_T" (component Init_GPIO_HCS12)
    - GPIO_Port_T_Init -This method initializes registers of the GPIO module according to this Peripheral Initialization 
                 settings. Call this method in the user code to initialize the module. By default, the method is called by PE 
                 automatically; see "Call Init method" property of the component for more details.
-
-Module "RTI1"      (component Init_RTI_HCS12)
-   - RTI1_Init -This method initializes registers of the RTI module according to this Peripheral Initialization settings. Call 
-                this method in user code to initialize the module. By default, the method is called by PE automatically; see 
-                "Call Init method" property of the component for more details.
 
 Module "IEE1"      (component IntEEPROM)
    - IEE1_SetByte -This method writes a given byte to a specified address in EEPROM. The method also sets address pointer for 
@@ -126,6 +116,11 @@ Module "ST25_IRQ"  (component ExtInt)
                 allows enable/disable of the interrupt.
    - ST25_IRQ_GetVal -Returns the actual value of the input pin of the component.
    - ST25_IRQ_SetEdge -Sets the edge type for this component that generates the interrupt.
+
+Module "Timer_1ms" (component TimerInt)
+   - Timer_1ms_Enable -This method enables the component - it starts the timer. Events may be generated 
+                (<DisableEvent>/<EnableEvent>).
+   - Timer_1ms_Disable -This method disables the component - it stops the timer. No events will be generated.
 
 Module "Cpu"       (component MC9S12G64_32)
    - Cpu_EnableInt -Enable maskable interrupts

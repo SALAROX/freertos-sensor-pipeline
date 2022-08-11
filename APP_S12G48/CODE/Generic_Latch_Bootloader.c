@@ -19,10 +19,8 @@
 #include "Cpu.h"
 #include "Events.h"
 #include "CAN1.h"
-#include "TIM1.h"
 #include "GPIO_Port_S.h"
 #include "GPIO_Port_T.h"
-#include "RTI1.h"
 #include "IEE1.h"
 #include "SM1.h"
 #include "SPI_SS.h"
@@ -128,13 +126,15 @@ void main(void)
   /* Write your code here */
   // PTT_PTT3 ^= 1;
 
+(void)Timer_1ms_Enable();
+
   /* Init NFC TRCV*/
 	(void)NFC_init();
 
   /*CAN TRCV Normal Mode*/
-  // CAN_STB_MODE(NORMAL);
+  CAN_STB_MODE(NORMAL);
 
-  // CAN_drv_init();
+  CAN_drv_init();
 
   SYS_SelectScheduler((uint8_t)SYS_defaultSched);
   SYS_sleepStatus = SYS_running;
@@ -160,7 +160,7 @@ void main(void)
     /* Runs as fast as possible */
     if (Comm_Mode == COMM_CAN)
     {
-      // UDS_Diagnostics_Handler();
+      UDS_Diagnostics_Handler();
     }
 
 #if 1
@@ -225,7 +225,7 @@ static void SYS_DefaultScheduler(void)
   case 0:
     // PTT_PTT3 ^= 1;
     // PTS_PTS0 ^= 1;
-    PT1AD_PT1AD1 ^= 1;
+    // PT1AD_PT1AD1 ^= 1;
     break;
 
   default:
@@ -272,27 +272,27 @@ void Dummy_Task(void)
 }
 #if 1
 #pragma CODE_SEG __NEAR_SEG NON_BANKED
-__interrupt void ivVrti(void)
-{
-  /* clear the flag */
-  CPMUFLG = 0x80U;
+// __interrupt void ivVrti(void)
+// {
+//   /* clear the flag */
+//   CPMUFLG = 0x80U;
 
-  ISR_SchedulerTick();
-#ifdef LIN_COM
-  lin_lld_timer_isr();
-#endif
+//   ISR_SchedulerTick();
+// #ifdef LIN_COM
+//   lin_lld_timer_isr();
+// #endif
 
-  if (can_counter >= 10)
-  {
-    can_counter = 0;
-  }
-  else
-  {
-    can_counter++;
-  }
+//   if (can_counter >= 10)
+//   {
+//     can_counter = 0;
+//   }
+//   else
+//   {
+//     can_counter++;
+//   }
 
-  tickInc();
-}
+//   tickInc();
+// }
 #pragma CODE_SEG DEFAULT
 #endif
 

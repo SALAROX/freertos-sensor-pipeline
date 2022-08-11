@@ -77,16 +77,18 @@
 
 #ifndef __BWUserType_SM1_TError
 #define __BWUserType_SM1_TError
-/*lint -save  -esym(960,18.4) Disable MISRA rule (18.4) checking. */
+  /*lint -save  -esym(960,18.4) Disable MISRA rule (18.4) checking. */
   typedef union {
     byte err;
     struct {
-      unsigned int OverRun  : 1;   /* OverRun error flag - the data overflow on the input has been detected. Both hardware detection (if supported) and software detection (when the value of Input buffer size property is 0) is used. */
-      unsigned int RxBufOvf : 1;   /* Rx buffer full error flag - the input circular buffer defined by the Input buffer size property has overrun. */
-      unsigned int FaultErr : 1;   /* Fault mode error flag - only if supported by hardware */
+      /*lint -save  -e46 Disable MISRA rule (6.4) checking. */
+      bool OverRun  : 1;   /* OverRun error flag - the data overflow on the input has been detected. Both hardware detection (if supported) and software detection (when the value of Input buffer size property is 0) is used. */
+      bool RxBufOvf : 1;   /* Rx buffer full error flag - the input circular buffer defined by the Input buffer size property has overrun. */
+      bool FaultErr : 1;   /* Fault mode error flag - only if supported by hardware */
+      /*lint -restore Enable MISRA rule (6.4) checking. */
     }errName;
   } SM1_TError;                        /* Error flags. For languages which don't support bit access is byte access only to error flags possible.  */
-/*lint -restore  +esym(961,18.4) Enable MISRA rule (18.4) checking. */
+  /*lint -restore  +esym(960,18.4) Enable MISRA rule (18.4) checking. */
 #endif
 
 
@@ -289,6 +291,9 @@ void SM1_Init(void);
 /* END SM1. */
 
 #endif /* ifndef __SM1 */
+/*!
+** @}
+*/
 /*
 ** ###################################################################
 **

@@ -2,6 +2,10 @@
     "files.associations": {
         "can_drv.h": "c",
         "gpio_port_s.h": "c",
-        "st25r3911_interrupt.h": "c"
+        "st25r3911_interrupt.h": "c",
+        "algorithm": "c",
+        "cstdlib": "c",
+        "st25_irq.h": "c",
+        "rti1.h": "c"
     }
 }

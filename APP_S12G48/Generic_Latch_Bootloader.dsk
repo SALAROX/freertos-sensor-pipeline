@@ -11,7 +11,7 @@ StartupPrj=C:\GIT_CHEVALIER_LOCAL\NFC_Reader_S12G\APP_S12G48\Generic_Latch_Bootl
 [AppPanel]
 Status=hiden
 WindowState=NORMAL
-Rect=[156|245|310|496]
+Rect=[26|115|310|496]
 
 [CpuPanel]
 Status=Visible
@@ -63,7 +63,7 @@ Rect=[1081|94|781|786]
 ViewMode=PrphRegInit
 SortRegsByAddr=Yes
 GroupRegisters=No
-Peripheral=SPI0
+Peripheral=CPU
 
 [Editor]
 Rect=[0|0|0|0]

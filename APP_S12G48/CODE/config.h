@@ -90,7 +90,9 @@
 // #define CAN_PCL_FRONT_LEFT		1
 // #define CAN_PCL_FRONT_RIGHT		1
 // #define CAN_PCL_REAR_LEFT		1
-#define CAN_PCL_REAR_RIGHT		1
+// #define CAN_PCL_REAR_RIGHT		1
+#define NFC_READER_EXTERIOR 1
+// #define NFC_READER_INTERIOR 1
 
 #endif /* CONFIG_H */
 

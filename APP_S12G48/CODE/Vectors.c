@@ -19,10 +19,9 @@
 ** ###################################################################*/
 #include "Cpu.h"
 #include "CAN1.h"
-#include "TIM1.h"
+#include "Timer_1ms.h"
 #include "GPIO_Port_S.h"
 #include "GPIO_Port_T.h"
-#include "RTI1.h"
 #include "IEE1.h"
 #include "SM1.h"
 #include "SPI_SS.h"
@@ -90,10 +89,10 @@ static const tIsrFunc _InterruptVectorTable[] @0xFF80U = { /* Interrupt vector t
   &Cpu_Interrupt,                       /* 0x74  0xFFE8   ivVtimch3     unused by PE */
   &Cpu_Interrupt,                       /* 0x75  0xFFEA   ivVtimch2     unused by PE */
   &Cpu_Interrupt,                       /* 0x76  0xFFEC   ivVtimch1     unused by PE */
-  &Cpu_Interrupt,                       /* 0x77  0xFFEE   ivVtimch0     unused by PE */
-  &ivVrti,                              /* 0x78  0xFFF0   ivVrti        used by PE */
+  &Timer_1ms_Interrupt,                       /* 0x77  0xFFEE   ivVtimch0     unused by PE */
+  &Cpu_Interrupt,                              /* 0x78  0xFFF0   ivVrti        used by PE */
   &Cpu_Interrupt,                       /* 0x79  0xFFF2   ivVirq        unused by PE */
-  &Cpu_Interrupt,                       /* 0x7A  0xFFF4   ivVxirq       unused by PE */
+  &ST25_IRQ_Interrupt,                       /* 0x7A  0xFFF4   ivVxirq       unused by PE */
   &Cpu_Interrupt,                       /* 0x7B  0xFFF6   ivVswi        unused by PE */
   &Cpu_Interrupt                        /* 0x7C  0xFFF8   ivVtrap       unused by PE */
 };
