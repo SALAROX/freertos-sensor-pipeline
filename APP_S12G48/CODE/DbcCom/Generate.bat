@@ -1,0 +1,4 @@
+start cmd /C pause
+
+cantools generate_c_source FM29_NFC_Readers_CAN_v1.0_Exterior.dbc
+cantools generate_c_source FM29_NFC_Readers_CAN_v1.0_Interior.dbc
