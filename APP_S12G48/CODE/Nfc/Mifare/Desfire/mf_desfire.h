@@ -25,7 +25,8 @@
  * DEFINITION
  * *****************************************************************
  */
-
+#pragma push
+#pragma CODE_SEG __FAR_SEG OTHER_ROM
 #define MFDF_ISO_WRAP_MODE											FALSE
 #define DISABLE_AES
 #define MFDF_GENERAL_BUFFER_SIZE									50U //100U
@@ -830,6 +831,6 @@ MFDF_RetCode_t MFDF_AbortTransaction();
  */
 MFDF_RetCode_t MFDF_CardRegistration(uint8_t CardID);
 
-
+#pragma pop
 
 #endif /* MF_DESFIRE_H_ */

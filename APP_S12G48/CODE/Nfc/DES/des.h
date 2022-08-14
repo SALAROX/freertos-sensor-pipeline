@@ -23,7 +23,8 @@
  * DEFINITION
  * *****************************************************************
  */
-
+#pragma push
+#pragma CODE_SEG __FAR_SEG OTHER_ROM
 #define DES_BLOCK_SIZE									8U
 #define DES_KEY_MAX_LENGTH								24U
 
@@ -160,5 +161,5 @@ DES_RetCode_t DES_SetKeyData(DES_Cipher_t *phCipher, const uint8_t* u8_Key, int3
  */
 DES_RetCode_t DES_CryptDataCBC(DES_Cipher_t *phCipher, DES_CBCMode_t e_CBC, DES_CipherMode_t e_Cipher, int32_t s32_ByteCount, const uint8_t* u8_In, uint8_t* u8_Out);
 
-
+#pragma pop
 #endif /* DES_DES_H_ */

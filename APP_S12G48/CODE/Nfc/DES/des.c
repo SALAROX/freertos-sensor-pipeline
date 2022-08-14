@@ -20,6 +20,9 @@
  * MACRO
  * *****************************************************************
  */
+
+#pragma push
+#pragma CODE_SEG __FAR_SEG OTHER_ROM
 #define c2l(c,l)  (l =((uint32_t)(*((c)++)))    , \
        l|=((uint32_t)(*((c)++)))<< 8L, \
        l|=((uint32_t)(*((c)++)))<<16L, \
@@ -808,4 +811,5 @@ DES_RetCode_t DES_CryptDataCBC(DES_Cipher_t *phCipher, DES_CBCMode_t e_CBC, DES_
 	}
 	return DES_OK;
 }
+#pragma pop
 /*******************************************************************/

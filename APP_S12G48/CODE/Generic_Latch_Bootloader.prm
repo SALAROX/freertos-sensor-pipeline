@@ -27,10 +27,11 @@ END
 
 SEGMENTS  /* Here all RAM/ROM areas of the device are listed. Used in PLACEMENT below. */
       RAM           = READ_WRITE    0x3000 TO   0x3FFF;   //3fff
-      ROM_C000      = READ_ONLY     0xC000 TO   0xFEFF;
+      ROM_C000      = READ_ONLY     0xC000 TO   0xDFFF;
       ROM_4000      = READ_ONLY     0x4000 TO   0x7EFF;
-      /* paged FLASH:                     0x8000 TO   0xBFFF; addressed through PPAGE */
+      PAGE_0D       = READ_ONLY   0x0D4000 TO 0x0D7EFF;
       PAGE_0E       = READ_ONLY   0x0E8000 TO 0x0EBFFF;
+      PAGE_0F       = READ_ONLY   0x0FC000 TO 0x0FDFFF;
 END
 
 PLACEMENT /* here all predefined and user segments are placed into the SEGMENTS defined above. */
@@ -39,8 +40,20 @@ PLACEMENT /* here all predefined and user segments are placed into the SEGMENTS 
       ROM_VAR,                /* constant variables */
       STRINGS,                /* string literals */
       NON_BANKED,             /* runtime routines which must not be banked */
+      //OTHER_ROM,
+      CAN1_CODE,
+      IEE1_CODE,
+      Timer_1ms_CODE,
+      SM1_CODE,
+      ADC_CODE,
+      RUNTIME,
       DEFAULT_ROM,
-      COPY              INTO  ROM_C000, ROM_4000;
+      COPY              INTO  ROM_4000, ROM_C000 /*ROM_4000, ROM_C000, PAGE_0E*/;
+      
+      //OTHER_ROM         INTO  ROM_PAGE;
+      //DEFAULT_ROM       INTO  ROM_C000; 
+      
+      OTHER_ROM         INTO  PAGE_0E;
       
 
       DEFAULT_RAM             /* all variables, the default RAM location */

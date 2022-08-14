@@ -189,6 +189,8 @@
  * *****************************************************************
  */
 //#pragma CODE_SEG OTHER_ROM
+#pragma push
+#pragma CODE_SEG __FAR_SEG OTHER_ROM
 /*
  * *****************************************************************
  * LOCAL FUNCTION
@@ -1566,4 +1568,5 @@ MFDF_RetCode_t MFDF_AbortTransaction()
 {
 	return MFDF_ERR_NONE;
 }
+#pragma pop
 /*******************************************************************/
