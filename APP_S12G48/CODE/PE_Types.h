@@ -24,6 +24,13 @@
 #ifndef __PE_Types_H
 #define __PE_Types_H
 
+#ifndef false
+#define  false FALSE
+#endif
+#ifndef true
+#define  true TRUE
+#endif
+
 #ifdef __MISRA__
   #ifndef FALSE
     #define  FALSE  0u

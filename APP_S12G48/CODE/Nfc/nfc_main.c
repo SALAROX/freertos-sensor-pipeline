@@ -12,6 +12,7 @@
 #include "CAN1.h"
 #include "CAN_drv.h"
 #include "CAN_cfg.h"
+#include "Com_Cfg.h"
 
 
 /*
@@ -91,7 +92,7 @@ debug_var = 10;
 	{
 		debug_var = 13;
 		/*NFC Trcv failure*/
-		// fm29_nfc_readers_can_v1_0_interior_nfc_int_0x200_status_frame.nfc_int_scu_sts_failure = 4; /*RF Failure*/
+		fm29_nfc_readers_can_v1_0_interior_nfc_int_0x200_status_frame.nfc_int_scu_sts_failure = 4; /*RF Failure*/
 	}
 	
 debug_var = 14;
@@ -159,9 +160,9 @@ void NFC_Task(void)
 				if( MFDF_DeviceInit(&MfdfDevice, &nfcaDev[0], &IsoDevice) == MFDF_ERR_NONE )
 				{
 					/*Desfire Tag Detected*/
-					// fm29_nfc_readers_can_v1_0_interior_nfc_int_0x200_status_frame.nfc_int_scu_sts_nfc_tag_status = NFC_TAG_PASSIVE;
+					fm29_nfc_readers_can_v1_0_interior_nfc_int_0x200_status_frame.nfc_int_scu_sts_nfc_tag_status = NFC_TAG_PASSIVE;
 					/* Send CAN_Frame */
-				CAN1_SendFrame(0, CAN_Frames[CompWLatchDiagRes].ID, DATA_FRAME, CAN_Frames[CompWLatchDiagRes].DLC, CAN_Frames[CompWLatchDiagRes].Data);
+				// CAN1_SendFrame(0, 0x100, DATA_FRAME, 8, CAN_Frames[CompWLatchDiagRes].Data);
 					debug_var = 3;
 
 					/* Select Application */
@@ -177,44 +178,46 @@ void NFC_Task(void)
 
 							if( MFDF_ReadData(&MfdfDevice, 0, 0, 0, DataBuf, sizeof(DataBuf), &DataLen) == MFDF_ERR_NONE )
 							{	debug_var = 5;						  
-								if( strcmp((char*)DataBuf, "4DOOR1") == 0 )
+								if( strcmp((char*)DataBuf, "DOOR1") == 0 )
 								{
 									debug_var = 4;
 									/*Update Auth Status*/
-									// fm29_nfc_readers_can_v1_0_interior_nfc_int_0x200_status_frame.nfc_int_scu_sts_nfc_tag_auth_status = NFC_AUTHENTICATION_SUCCEED;
-									// fm29_nfc_readers_can_v1_0_interior_nfc_int_0x200_status_frame.nfc_int_scu_sts_key_id = 1;
+									fm29_nfc_readers_can_v1_0_interior_nfc_int_0x200_status_frame.nfc_int_scu_sts_nfc_tag_auth_status = NFC_AUTHENTICATION_SUCCEED;
+									fm29_nfc_readers_can_v1_0_interior_nfc_int_0x200_status_frame.nfc_int_scu_sts_key_id = 1;
 								}
-								else if( strcmp((char*)DataBuf, "4DOOR2") == 0 )
+								else if( strcmp((char*)DataBuf, "DOOR2") == 0 )
 								{
 									debug_var = 4;
 									/*Update Auth Status*/
-									// fm29_nfc_readers_can_v1_0_interior_nfc_int_0x200_status_frame.nfc_int_scu_sts_nfc_tag_auth_status = NFC_AUTHENTICATION_SUCCEED;
-									// fm29_nfc_readers_can_v1_0_interior_nfc_int_0x200_status_frame.nfc_int_scu_sts_key_id = 2;
+									fm29_nfc_readers_can_v1_0_interior_nfc_int_0x200_status_frame.nfc_int_scu_sts_nfc_tag_auth_status = NFC_AUTHENTICATION_SUCCEED;
+									fm29_nfc_readers_can_v1_0_interior_nfc_int_0x200_status_frame.nfc_int_scu_sts_key_id = 2;
 								}
 								else
 								{
 									/*Tamper Attempt*/
-									// fm29_nfc_readers_can_v1_0_interior_nfc_int_0x200_status_frame.nfc_int_scu_sts_nfc_tag_auth_status = NFC_AUTHENTICATION_TAMPER_ATTEMPT;
+									fm29_nfc_readers_can_v1_0_interior_nfc_int_0x200_status_frame.nfc_int_scu_sts_nfc_tag_auth_status = NFC_AUTHENTICATION_TAMPER_ATTEMPT;
 								}
 							}
 							else
 							{
 								/*Authentication Failed*/
-								// fm29_nfc_readers_can_v1_0_interior_nfc_int_0x200_status_frame.nfc_int_scu_sts_nfc_tag_auth_status = NFC_AUTHENTICATION_FAILED;
+								fm29_nfc_readers_can_v1_0_interior_nfc_int_0x200_status_frame.nfc_int_scu_sts_nfc_tag_auth_status = NFC_AUTHENTICATION_FAILED;
 							}
 						}
 						else
 						{
 							/*Authentication Failed*/
-							// fm29_nfc_readers_can_v1_0_interior_nfc_int_0x200_status_frame.nfc_int_scu_sts_nfc_tag_auth_status = NFC_AUTHENTICATION_FAILED;
+							fm29_nfc_readers_can_v1_0_interior_nfc_int_0x200_status_frame.nfc_int_scu_sts_nfc_tag_auth_status = NFC_AUTHENTICATION_FAILED;
 						}
 					}
 					else
 					{
 						/*Do Nothing*/
 					}
+					/*Update Frame Counter*/
+					// fm29_nfc_readers_can_v1_0_interior_nfc_int_0x200_status_frame.nfc_int_scu_sts_counter += 1;
 					/*Send Status Frame*/
-					// ComSend_interior_nfc_int_0x200_status_frame_frame();
+					ComSend_interior_nfc_int_0x200_status_frame_frame();
 				}
 				/*
 				 * =================================================================================================
@@ -253,6 +256,13 @@ void NFC_Task(void)
 		{
 			/*Error*/
 			debug_var = 0;
+
+			fm29_nfc_readers_can_v1_0_interior_nfc_int_0x200_status_frame.nfc_int_scu_sts_nfc_tag_status = 0;
+			fm29_nfc_readers_can_v1_0_interior_nfc_int_0x200_status_frame.nfc_int_scu_sts_key_id = 0;
+			fm29_nfc_readers_can_v1_0_interior_nfc_int_0x200_status_frame.nfc_int_scu_sts_nfc_tag_auth_status = 0;
+			fm29_nfc_readers_can_v1_0_interior_nfc_int_0x200_status_frame.nfc_int_scu_sts_nfc_tag_status = 0;
+			fm29_nfc_readers_can_v1_0_interior_nfc_int_0x200_status_frame.nfc_int_scu_sts_pairing_mode = 0;
+			fm29_nfc_readers_can_v1_0_interior_nfc_int_0x200_status_frame.nfc_int_scu_sts_update_byte = 0;
 		}
 	}
 	else

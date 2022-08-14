@@ -41,6 +41,9 @@
 #include "nfc_main.h"
 #include "platform.h"
 
+#include "CAN_cfg.h"
+#include "Com_Cfg.h"
+
 /******************************************************************************
  *                              Macros                                        *
  ******************************************************************************/
@@ -186,7 +189,14 @@ void main(void)
       SYS_schedClock1ms++;
       sysTickTimer++;
 
-      
+      /*RF Failure*/
+			if(fm29_nfc_readers_can_v1_0_interior_nfc_int_0x200_status_frame.nfc_int_scu_sts_failure == 4)
+			{
+        /*Update Frame Counter*/
+					fm29_nfc_readers_can_v1_0_interior_nfc_int_0x200_status_frame.nfc_int_scu_sts_counter += 1;
+				/*Send Status Frame*/
+				ComSend_interior_nfc_int_0x200_status_frame_frame();
+			}
     }
     else
     {
