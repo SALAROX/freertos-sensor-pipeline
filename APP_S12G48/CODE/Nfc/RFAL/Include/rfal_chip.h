@@ -64,7 +64,8 @@
 #include "rfal_rf.h"
 #include "PE_Types.h"
 
-
+#pragma push
+#pragma CODE_SEG __FAR_SEG OTHER_ROM
 /*****************************************************************************
  *  RF Chip                                                                  *  
  *****************************************************************************/
@@ -285,6 +286,7 @@ ReturnCode rfalChipMeasureCapacitance( uint8_t* result );
  */
 ReturnCode rfalChipMeasurePowerSupply( uint8_t param, uint8_t* result );
 
+#pragma pop
 
 #endif /* RFAL_CHIP_H */
 

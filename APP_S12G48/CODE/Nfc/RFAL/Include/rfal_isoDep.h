@@ -67,6 +67,8 @@
  * DEFINES
  ******************************************************************************
  */
+#pragma push
+#pragma CODE_SEG __FAR_SEG OTHER_ROM
 
 #define RFAL_ISODEP_PROLOGUE_SIZE               (3U)     /*!< Length of Prologue Field for I-Block Format                       */
 
@@ -855,8 +857,10 @@ ReturnCode rfalIsoDepPollBHandleActivation( rfalIsoDepFSxI FSDI, uint8_t DID, rf
  */
 ReturnCode rfalIsoDepPollHandleSParameters( rfalIsoDepDevice *isoDepDev, rfalBitRate maxTxBR, rfalBitRate maxRxBR );
 
+#pragma pop
 
 #endif /* RFAL_ISODEP_H_ */
+
 
 /**
   * @}

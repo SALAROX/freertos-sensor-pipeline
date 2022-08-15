@@ -27,11 +27,13 @@ END
 
 SEGMENTS  /* Here all RAM/ROM areas of the device are listed. Used in PLACEMENT below. */
       RAM           = READ_WRITE    0x3000 TO   0x3FFF;   //3fff
-      ROM_C000      = READ_ONLY     0xC000 TO   0xDFFF;
-      ROM_4000      = READ_ONLY     0x4000 TO   0x7EFF;
+      //ROM_C000      = READ_ONLY     0xC000 TO   0xDFFF;
+      ROM_4000      = READ_ONLY     0x4000 TO   0x7FFF FILL 0XFF;
       PAGE_0D       = READ_ONLY   0x0D4000 TO 0x0D7EFF;
-      PAGE_0E       = READ_ONLY   0x0E8000 TO 0x0EBFFF;
+      PAGE_0E       = READ_ONLY   0x0E8000 TO 0x0EBFFF FILL 0XFF;
       PAGE_0F       = READ_ONLY   0x0FC000 TO 0x0FDFFF;
+      
+      VECTORS	 = READ_ONLY	0xDE80 TO 0xDFFF FILL 0XFF;  	/* Area 0xDF80 - 0xDFFF is occupied by vector table */
 END
 
 PLACEMENT /* here all predefined and user segments are placed into the SEGMENTS defined above. */
@@ -48,7 +50,7 @@ PLACEMENT /* here all predefined and user segments are placed into the SEGMENTS 
       ADC_CODE,
       RUNTIME,
       DEFAULT_ROM,
-      COPY              INTO  ROM_4000, ROM_C000 /*ROM_4000, ROM_C000, PAGE_0E*/;
+      COPY              INTO  ROM_4000/*, ROM_C000*/ /*ROM_4000, ROM_C000, PAGE_0E*/;
       
       //OTHER_ROM         INTO  ROM_PAGE;
       //DEFAULT_ROM       INTO  ROM_C000; 

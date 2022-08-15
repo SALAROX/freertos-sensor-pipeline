@@ -92,6 +92,9 @@
 * GLOBAL DEFINES
 ******************************************************************************
 */
+#pragma push
+#pragma CODE_SEG __FAR_SEG OTHER_ROM
+
 #define RFAL_VERSION                               (uint32_t)0x020000U                          /*!< RFAL Current Version: v2.0.0                      */
 
 #define RFAL_FWT_NONE                              0xFFFFFFFFU                                  /*!< Disabled FWT: Wait forever for a response         */
@@ -1518,6 +1521,7 @@ Bool rfalWakeUpModeHasWoke( void );
  */
 ReturnCode rfalWakeUpModeStop( void );
 
+#pragma pop
 
 #endif /* RFAL_RF_H */
 

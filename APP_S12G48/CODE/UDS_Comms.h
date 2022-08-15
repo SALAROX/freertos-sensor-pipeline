@@ -22,7 +22,8 @@
 /**********************************************************************************************
 * Macros
 **********************************************************************************************/
-
+#pragma push
+#pragma CODE_SEG __FAR_SEG OTHER_ROM
 /* Configurable macros */
 
 #define BAUD_RATE					 	19200
@@ -273,3 +274,5 @@ byte IO_writeByte(byte Chr);
 uint8_t bcdToBinary(uint8_t bcd);
 
 #endif /* COMMS_H_ */
+
+#pragma pop 

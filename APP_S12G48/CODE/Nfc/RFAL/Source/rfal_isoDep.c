@@ -54,6 +54,8 @@
  * ENABLE SWITCH
  ******************************************************************************
  */
+#pragma push
+#pragma CODE_SEG __FAR_SEG OTHER_ROM
 
 #ifndef RFAL_FEATURE_ISO_DEP
     #error " RFAL: Module configuration missing. Please enable/disable ISO-DEP module by setting: RFAL_FEATURE_ISO_DEP. "
@@ -2542,3 +2544,5 @@ ReturnCode rfalIsoDepGetApduTransceiveStatus( void )
  }
 
 #endif /* RFAL_FEATURE_ISO_DEP */
+
+#pragma pop

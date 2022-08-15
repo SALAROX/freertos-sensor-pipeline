@@ -56,8 +56,8 @@
 * GLOBAL TYPES
 ******************************************************************************
 */
-
-
+#pragma push
+#pragma CODE_SEG __FAR_SEG OTHER_ROM
 
 /*! Struct that holds all involved on a Transceive including the context passed by the caller     */
 typedef struct{
@@ -3674,7 +3674,7 @@ ReturnCode rfalChipMeasurePowerSupply( uint8_t param, uint8_t* result )
     return ST_ERR_NONE;
 }
 
-
+#pragma pop
 
 /*******************************************************************************/
 
