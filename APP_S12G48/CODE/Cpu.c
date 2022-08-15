@@ -173,7 +173,7 @@ void _EntryPoint(void)
   /* DIRECT: DP15=0,DP14=0,DP13=0,DP12=0,DP11=0,DP10=0,DP9=0,DP8=0 */
   setReg8(DIRECT, 0x00U);               
   /* IVBR: IVB_ADDR=0xFF */
-  setReg8(IVBR, 0xFFU);                 
+  setReg8(IVBR, 0xDEU);                 
   /* ECLKCTL: NECLK=1,NCLKX2=1,DIV16=0,EDIV4=0,EDIV3=0,EDIV2=0,EDIV1=0,EDIV0=0 */
   setReg8(ECLKCTL, 0xC0U);              
   /*  System clock initialization */

@@ -31,7 +31,7 @@
 /* ISR prototype */
 typedef void (*near tIsrFunc)(void);
 /*lint -save  -e950 Disable MISRA rule (1.1) checking. */
-static const tIsrFunc _InterruptVectorTable[] @0xFF80U = { /* Interrupt vector table */
+static const tIsrFunc _InterruptVectorTable[] @0xDE80U = { /* Interrupt vector table */
 /*lint -restore Enable MISRA rule (1.1) checking. */
   /* ISR name                               No.  Address  Name          Description */
   &Cpu_Interrupt,                       /* 0x40  0xFF80   ivVsi         unused by PE */
