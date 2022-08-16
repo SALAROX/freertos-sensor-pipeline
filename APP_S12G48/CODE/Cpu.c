@@ -59,12 +59,12 @@ volatile byte CCR_reg;                 /* Current CCR reegister */
 **         This method is internal. It is used by Processor Expert only.
 ** ===================================================================
 */
-ISR(Cpu_Interrupt)
-{/*PT1AD_PT1AD2 ^= 1;*/
-  /*lint -save -e950 Disable MISRA rule (1.1) checking. */
-  asm(BGND);
-  /*lint -restore Enable MISRA rule (1.1) checking. */
-}
+// ISR(Cpu_Interrupt)
+// {/*PT1AD_PT1AD2 ^= 1;*/
+//   /*lint -save -e950 Disable MISRA rule (1.1) checking. */
+//   asm(BGND);
+//   /*lint -restore Enable MISRA rule (1.1) checking. */
+// }
 
 
 #pragma CODE_SEG DEFAULT
@@ -302,6 +302,7 @@ void PE_low_level_init(void)
   setReg8Bits(DDR1AD, 0x06U); /*1:Output -- 0:Input*/ 
   setReg8Bits(PPS1AD, 0x06U);
   setReg8Bits(PER1AD, 0x06U);
+  
   __EI();                              /* Enable interrupts */
 }
 

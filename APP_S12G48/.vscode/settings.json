@@ -6,6 +6,17 @@
         "algorithm": "c",
         "cstdlib": "c",
         "st25_irq.h": "c",
-        "rti1.h": "c"
+        "rti1.h": "c",
+        "mf_desfire.h": "c",
+        "rfal_user.h": "c",
+        "string.h": "c",
+        "des.h": "c",
+        "pe_types.h": "c",
+        "uds_comms.h": "c",
+        "utils.h": "c",
+        "rfal_isodep.h": "c",
+        "rfal_analogconfig.h": "c",
+        "st25r3911_com.h": "c",
+        "st25r3911.h": "c"
     }
 }

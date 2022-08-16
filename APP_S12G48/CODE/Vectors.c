@@ -28,6 +28,12 @@
 #include "ADC.h"
 #include "ST25_IRQ.h"
 
+/******************************************************************************
+ *                              Macros                                        *
+ ******************************************************************************/
+
+#define Cpu_Interrupt _EntryPoint	/* redirect unhandled interrupts */
+
 /* ISR prototype */
 typedef void (*near tIsrFunc)(void);
 /*lint -save  -e950 Disable MISRA rule (1.1) checking. */
